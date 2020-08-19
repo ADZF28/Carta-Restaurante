@@ -14,8 +14,14 @@ class CreateInfoRestaurantesTable extends Migration
     public function up()
     {
         Schema::create('info_restaurantes', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('idrestaurante');
+            $table->string('direccion');
+            $table->string('contacto');
+            $table->string('horario');
             $table->timestamps();
+            $table->foreign('idrestaurante')->references('id')->on('restaurantes')->onDelete('cascade'); 
+           
         });
     }
 

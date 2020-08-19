@@ -14,8 +14,13 @@ class CreateControlManagersTable extends Migration
     public function up()
     {
         Schema::create('control_managers', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('idrestaurante');
+            $table->string('color1');
+            $table->string('color2');
+            $table->string('color3');
             $table->timestamps();
+            $table->foreign('idrestaurante')->references('id')->on('restaurantes'); 
         });
     }
 
