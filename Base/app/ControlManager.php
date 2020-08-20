@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ControlManager extends Model
 {
-    protected $table = 'contro_managers';
+    protected $table = 'control_managers';
     protected $primaryKey = 'id';
 
     protected $fillable = [

@@ -24,7 +24,8 @@ class InfoRestauranteController extends Controller
      */
     public function create()
     {
-        //
+        $datos=InfoRestaurante::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -35,7 +36,17 @@ class InfoRestauranteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+            $Dato=new InfoRestaurante();
+            $Dato->idrestaurante=$request->idrestaurante;
+            $Dato->direccion=$request->direccion;
+            $Dato->horario=$request->horario;
+            $Dato->contacto=$request->contacto;
+            $Dato->save();
+
+            return response()->json(['mensaje'=>"Datos Guardados.", 'code'=>'201']);
+            
+
     }
 
     /**
@@ -44,11 +55,13 @@ class InfoRestauranteController extends Controller
      * @param  \App\InfoRestaurante  $infoRestaurante
      * @return \Illuminate\Http\Response
      */
-    public function show(InfoRestaurante $infoRestaurante)
+    public function show($id)
     {
-        //
+        $datos=InfoRestaurante::find($id);  
+        return response()->json(['result'=>$datos]);
     }
 
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -67,9 +80,17 @@ class InfoRestauranteController extends Controller
      * @param  \App\InfoRestaurante  $infoRestaurante
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InfoRestaurante $infoRestaurante)
+    public function update(Request $request)
     {
-        //
+        $Dato=InfoRestaurante::find($request->id);
+        $Dato->idrestaurante=$request->idrestaurante;
+        $Dato->direccion=$request->direccion;
+        $Dato->horario=$request->horario;
+        $Dato->contacto=$request->contacto;
+        $Dato->update();
+
+        
+        return response()->json(['mensaje'=>"Dato Actualizado.", 'code'=>'201']);
     }
 
     /**
@@ -78,8 +99,12 @@ class InfoRestauranteController extends Controller
      * @param  \App\InfoRestaurante  $infoRestaurante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InfoRestaurante $infoRestaurante)
+    public function destroy($id)
     {
-        //
+        $datos=InfoRestaurante::where('idrestaurante', $id)->get()->first();
+        $datos->delete();
+
+        
+        return response()->json(['mensaje'=>"Dato Eliminado.", 'code'=>'201']);
     }
 }

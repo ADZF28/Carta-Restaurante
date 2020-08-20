@@ -24,7 +24,8 @@ class RestauranteController extends Controller
      */
     public function create()
     {
-        //
+        $datos=Restaurante::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -35,7 +36,11 @@ class RestauranteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $Dato=new Restaurante();
+            $Dato->nombre=$request->nombre;
+            $Dato->save();
+
+            return response()->json(['mensaje'=>"Dato Guardado.", 'code'=>'201']);
     }
 
     /**
@@ -44,9 +49,10 @@ class RestauranteController extends Controller
      * @param  \App\Restaurante  $restaurante
      * @return \Illuminate\Http\Response
      */
-    public function show(Restaurante $restaurante)
+    public function show($id)
     {
-        //
+        $datos=Restaurante::find($id);  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -67,9 +73,14 @@ class RestauranteController extends Controller
      * @param  \App\Restaurante  $restaurante
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Restaurante $restaurante)
+    public function update(Request $request)
     {
-        //
+        $Dato=Restaurante::find($request->id);
+        $Dato->nombre=$request->nombre;
+        $Dato->update();
+
+        return response()->json(['mensaje'=>"Datos actualizados", 'code'=>'201']);
+
     }
 
     /**
@@ -78,8 +89,12 @@ class RestauranteController extends Controller
      * @param  \App\Restaurante  $restaurante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Restaurante $restaurante)
+    public function destroy($id)
     {
-        //
+        $datos=Restaurante::where('idrestaurante', $id)->get()->first();
+        $datos->delete();
+
+        
+        return response()->json(['mensaje'=>"Dato Eliminado.", 'code'=>'201']);
     }
 }

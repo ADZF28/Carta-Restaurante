@@ -35,7 +35,13 @@ class ControlManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $coment=new ControlManager();
+        $coment->idrestaurante=$request->idrestaurante;
+        $coment->color1=$request->color1;
+        $coment->color2=$request->color2;
+        $coment->color3=$request->color3;
+        $coment->save();
+        return response()->json(['result'=>"Datos guardados", 'code'=>'201']);
     }
 
     /**
@@ -44,9 +50,10 @@ class ControlManagerController extends Controller
      * @param  \App\ControlManager  $controlManager
      * @return \Illuminate\Http\Response
      */
-    public function show(ControlManager $controlManager)
+    public function show($id)
     {
-        //
+        $datos=ControlManager::where('idrestaurante', $id)->get();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -67,9 +74,15 @@ class ControlManagerController extends Controller
      * @param  \App\ControlManager  $controlManager
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ControlManager $controlManager)
+    public function update(Request $request)
     {
-        //
+        $coment=ControlManager::find($request->id);
+        $coment->idrestaurante=$request->idrestaurante;
+        $coment->color1=$request->color1;
+        $coment->color2=$request->color2;
+        $coment->color3=$request->color3;
+        $coment->update();
+        return response()->json(['result'=>"Datos actualizados", 'code'=>'201']);
     }
 
     /**
@@ -78,8 +91,14 @@ class ControlManagerController extends Controller
      * @param  \App\ControlManager  $controlManager
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ControlManager $controlManager)
+    public function destroy($id)
     {
-        //
+        $datos=ControlManager::where('idrestaurante', $id)->get()->first();  
+        if($datos != null){
+            $datos->delete();
+            return response()->json(['result'=>"Dato Eliminado", 'code'=>'201']);
+        }else
+        return response()->json(['result'=>"No se encuentra dato", 'code'=>'201']);
+        
     }
 }
