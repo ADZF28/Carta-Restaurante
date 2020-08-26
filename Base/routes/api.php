@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('manager','ControlManagerController');
+Route::resource('Manager','ControlManagerController');
 Route::resource('InfoRestaurante','InfoRestauranteController');
 Route::resource('Restaurante','RestauranteController');
+Route::resource('Productos','ProductoController');
+Route::resource('Imagen','ImageController');
+//Route::get('probando/{ids}/{modelos}','ImageController@ValidarUsuario');
+Route::get('ImgBuscar/{id}/{modelo}', 'ImageController@BuscarImagen');

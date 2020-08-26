@@ -14,7 +14,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -24,7 +24,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +35,15 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos=new Producto();
+        $datos->nombre=$request->nombre;
+        $datos->precio=$request->precio;
+        $datos->descripcion=$request->descripcion;
+        $datos->idrestaurante=$request->idrestaurante;
+        $datos->idcategoria=$request->idcategoria;
+        $datos->idturno=$request->idturno;
+        $datos->save();
+        return response()->json(['result'=>"Datos guardados", 'code'=>'201']);
     }
 
     /**
@@ -44,9 +52,10 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show($id)
     {
-        //
+        $datos=Producto::where('idrestaurante', $id)->get();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -67,9 +76,19 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request)
     {
-        //
+        $datos=Producto::find($request->id);
+        $datos->nombre=$request->nombre;
+        $datos->precio=$request->precio;
+        $datos->descripcion=$request->descripcion;
+        $datos->idrestaurante=$request->idrestaurante;
+        $datos->idcategoria=$request->idcategoria;
+        $datos->idturno=$request->idturno;
+        $datos->update();
+
+        
+        return response()->json(['mensaje'=>"Dato Actualizado.", 'code'=>'201']);
     }
 
     /**
@@ -78,8 +97,16 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        $datos=Producto::where('id', $id)->get()->first();  
+        if($datos != null){
+            $datos->delete();
+            return response()->json(['result'=>"Dato Eliminado", 'code'=>'201']);
+        }else
+        return response()->json(['result'=>"No se encuentran datos", 'code'=>'202']);
     }
+
+
+
 }

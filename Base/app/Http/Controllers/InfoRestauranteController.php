@@ -14,7 +14,8 @@ class InfoRestauranteController extends Controller
      */
     public function index()
     {
-        //
+        $datos=InfoRestaurante::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -24,8 +25,7 @@ class InfoRestauranteController extends Controller
      */
     public function create()
     {
-        $datos=InfoRestaurante::all();  
-        return response()->json(['result'=>$datos]);
+        
     }
 
     /**
@@ -57,7 +57,7 @@ class InfoRestauranteController extends Controller
      */
     public function show($id)
     {
-        $datos=InfoRestaurante::find($id);  
+        $datos=InfoRestaurante::where('idrestaurante', $id)->get(); ;  
         return response()->json(['result'=>$datos]);
     }
 
@@ -101,7 +101,7 @@ class InfoRestauranteController extends Controller
      */
     public function destroy($id)
     {
-        $datos=InfoRestaurante::where('idrestaurante', $id)->get()->first();
+        $datos=InfoRestaurante::where('id', $id)->get()->first();
         $datos->delete();
 
         

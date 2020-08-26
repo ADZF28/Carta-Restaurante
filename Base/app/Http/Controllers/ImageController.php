@@ -14,7 +14,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        //$datos=Image::all();  
+        //return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -24,7 +25,7 @@ class ImageController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -35,7 +36,13 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Dato=new Image();
+        $Dato->ruta=$request->ruta;
+        $Dato->modelo=$request->modelo;
+        $Dato->idmodelo=$request->idmodelo;
+        $Dato->save();
+
+        return response()->json(['mensaje'=>"Datos Guardados.", 'code'=>'201']);
     }
 
     /**
@@ -44,9 +51,9 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function show(Image $image)
+    public function show()
     {
-        //
+        
     }
 
     /**
@@ -67,9 +74,15 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Image $image)
+    public function update(Request $request)
     {
-        //
+       $Dato=Image::find($request->id);
+        $Dato->ruta=$request->ruta;
+        $Dato->modelo=$request->modelo;
+        $Dato->idmodelo=$request->idmodelo;
+        $Dato->update();
+
+        return response()->json(['mensaje'=>"Datos Actualizados.", 'code'=>'201']);
     }
 
     /**
@@ -80,6 +93,16 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        //
+        $datos=Image::find($id);
+        $datos->delete();
+
+        
+        return response()->json(['mensaje'=>"Datos Eliminados.", 'code'=>'201']);
+    }
+
+    public function BuscarImagen($id, $modelo)
+    {
+        $datos=Image::where('modelo', $modelo)->where('idmodelo', $id)->get();  
+        return response()->json(['result'=>$datos]);
     }
 }

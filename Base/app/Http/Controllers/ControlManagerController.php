@@ -35,12 +35,12 @@ class ControlManagerController extends Controller
      */
     public function store(Request $request)
     {
-        $coment=new ControlManager();
-        $coment->idrestaurante=$request->idrestaurante;
-        $coment->color1=$request->color1;
-        $coment->color2=$request->color2;
-        $coment->color3=$request->color3;
-        $coment->save();
+        $datos=new ControlManager();
+        $datos->idrestaurante=$request->idrestaurante;
+        $datos->color1=$request->color1;
+        $datos->color2=$request->color2;
+        $datos->color3=$request->color3;
+        $datos->save();
         return response()->json(['result'=>"Datos guardados", 'code'=>'201']);
     }
 
@@ -76,12 +76,12 @@ class ControlManagerController extends Controller
      */
     public function update(Request $request)
     {
-        $coment=ControlManager::find($request->id);
-        $coment->idrestaurante=$request->idrestaurante;
-        $coment->color1=$request->color1;
-        $coment->color2=$request->color2;
-        $coment->color3=$request->color3;
-        $coment->update();
+        $datos=ControlManager::find($request->id);
+        $datos->idrestaurante=$request->idrestaurante;
+        $datos->color1=$request->color1;
+        $datos->color2=$request->color2;
+        $datos->color3=$request->color3;
+        $datos->update();
         return response()->json(['result'=>"Datos actualizados", 'code'=>'201']);
     }
 
@@ -93,12 +93,12 @@ class ControlManagerController extends Controller
      */
     public function destroy($id)
     {
-        $datos=ControlManager::where('idrestaurante', $id)->get()->first();  
+        $datos=ControlManager::where('id', $id)->get()->first();  
         if($datos != null){
             $datos->delete();
             return response()->json(['result'=>"Dato Eliminado", 'code'=>'201']);
         }else
-        return response()->json(['result'=>"No se encuentra dato", 'code'=>'201']);
+        return response()->json(['result'=>"No se encuentra dato", 'code'=>'202']);
         
     }
 }
