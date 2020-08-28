@@ -22,5 +22,6 @@ Route::resource('InfoRestaurante','InfoRestauranteController');
 Route::resource('Restaurante','RestauranteController');
 Route::resource('Productos','ProductoController');
 Route::resource('Imagen','ImageController');
+Route::resource('Categoria','CategoriaController');
 //Route::get('probando/{ids}/{modelos}','ImageController@ValidarUsuario');
 Route::get('ImgBuscar/{id}/{modelo}', 'ImageController@BuscarImagen');

@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false" (click)="openFirst()"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="mostrar()">
+            <ion-icon name="search-outline"></ion-icon>      
+              </ion-button>
+        </ion-buttons>
+
+        <ion-title style="padding-left: 100px;">Carta</ion-title>
+      </ion-toolbar>
+
+
+
+
+</ion-header>
+
+<ion-content >
+  <ion-searchbar showCancelButton="focus" *ngIf="buscar"></ion-searchbar>
+
+  <ion-content >
+ 
+    <ion-menu side="start" menuId="first" contentId="main">
+      <ion-header style="background-image: url(https://i.pinimg.com/originals/69/d3/56/69d3569f96f087458308052aa137ab2c.jpg);">
+        <ion-toolbar color="secundary">
+          <ion-title style="color: white; padding-left: 40px;">Opciones</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-label style="padding-left: 10px;">Menu Item</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-label style="padding-left: 10px;">Menu Item</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-label style="padding-left: 10px;">Menu Item</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-label style="padding-left: 10px;">Menu Item</ion-label>
+          </ion-item>
+         
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+     
+    <ion-router-outlet id="main"></ion-router-outlet>
+
+
+    <ion-list>
+          
+      <ion-item>
+        <ion-label>Seleccione Categoría</ion-label>
+        <ion-select  (ionChange)="Cambiocat()">
+          <ion-select-option  *ngFor="let cat of cate" value="{{cat.id}}" >{{cat.categoria}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+  <div class="wrapper" *ngIf="TodosProductos"  >
+    <div  *ngFor="let item of productos" style="margin: 5px; background-color: rgb(125, 235, 229);">
+      <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg" >
+      <ion-label style="padding-left: 5px; padding-right: 15px;">{{item.nombre}}</ion-label> 
+      <ion-label > $ {{item.precio}}</ion-label>
+    </div>
+  </div>
+  <div class="wrapper" *ngIf="FiltroProductos"  >
+    <div  *ngFor="let item of productosCate" style="margin: 5px; background-color: rgb(125, 235, 229);">
+      <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg" >
+      <ion-label style="padding-left: 5px; padding-right: 15px;">{{item.nombre}}</ion-label> 
+      <ion-label > $ {{item.precio}}</ion-label>
+    </div>
+  </div>  
+
+</ion-content>

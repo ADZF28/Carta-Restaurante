@@ -14,7 +14,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $datos=Categoria::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
