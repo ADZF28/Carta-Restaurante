@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BarcodeScannerOptions, BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import { Routes, Router } from "@angular/router";
+import { ToastController } from '@ionic/angular';
+import { RestauranteService } from '../../Servicios/restaurante.service';
+
 
 @Component({
   selector: 'app-escaneo',
@@ -7,9 +12,88 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EscaneoPage implements OnInit {
 
-  constructor() { }
+  datocodificado: any;
+  datoscaneado: {};
+  id:string;
+
+  constructor(
+    private barcodeScanner: BarcodeScanner,
+    private ruta: Router,
+    private toast:ToastController,
+    private resta:RestauranteService
+    ) {
+
+  }
 
   ngOnInit() {
   }
+
+  async ingreso(mensaje: string) {
+    const toast = await this.toast.create({
+      message: "Bienvenido al restaurante "+mensaje+".",
+      duration: 3000,
+      color: "success",
+    });
+    toast.present();
+   
+  }
+  async error(mensaje: string) {
+    const toast = await this.toast.create({
+      message: "Bienvenido al restaurante "+mensaje+".",
+      duration: 3000,
+      color: "danger",
+    });
+    toast.present();
+   
+  }
+
+  LeerCode() {
+    
+    this.barcodeScanner.scan().then(barcodeData => {
+        this.datoscaneado = barcodeData;
+        this.ReconocerRestaurante(String(this.datoscaneado));
+      })
+      .catch(err => {
+        console.log("Error", err);
+      });
+  }
+ 
+  CodificarTexto() {
+    
+    this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.datocodificado).then(
+        encodedData => {
+          this.datocodificado = encodedData;
+        },
+        err => {
+          console.log("Un error ha ocurrido: " + err);
+        }
+      );
+  }
+
+  ReconocerRestaurante(nombreresta: string) {
+    
+    this.resta.ObtenerIDRestaurante(nombreresta)
+      .then((data) => {
+        let Restau = data["result"];
+        
+        if (Restau.length > 0) {
+          for (let data of Restau) {
+            this.id=data['id'];
+          }
+          this.ruta.navigate(["/home/"+this.id ]);
+          this.ingreso( String(this.datoscaneado));
+        } else {
+        
+          this.error("Codigo QR incorrecto.");
+          
+        }
+      })
+      .catch((error) => {
+        debugger
+        console.log(error);
+      });
+    
+  }
+ 
 
 }

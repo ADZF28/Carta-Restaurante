@@ -49,9 +49,9 @@ class RestauranteController extends Controller
      * @param  \App\Restaurante  $restaurante
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($nombre)
     {
-        $datos=Restaurante::find($id);  
+        $datos=Restaurante::where('nombre',$nombre)->get()->first();  
         return response()->json(['result'=>$datos]);
     }
 

@@ -1,7 +1,30 @@
-<ion-header>
- 
-</ion-header>
+  
+  <ion-content class="myview" >
+    <ion-title style="text-align: center; margin-top: 60px; font-family: serif; font-weight: bolder; font-size: 30px;"  color="light">
+      Carta de restaurante
+    </ion-title>
+    <div style="padding: 10px">
+  
+        <!--CODIFICAR-->
+        <center>
+                  <img src="../../assets/img/qr.png" height="170px" width="170px">
+        </center>
 
-<ion-content>
-
-</ion-content>
+        <ion-input type="text" color="primary" placeholder="Digite su texto" [(ngModel)]="datocodificado"></ion-input>
+    
+        <ion-button expand="block" (click)="CodificarTexto()">Generar Código</ion-button>
+  
+        <br>
+  
+        <!--SCANNEAR-->
+        <ion-button size="large" style="font-weight: bolder;" expand="block" color="warning" (click)="LeerCode()">Scannear Código</ion-button>
+      
+        <div *ngIf="datoscaneado">
+            <p>
+                Contenido obtenido: <b>{{ datoscaneado["text"] }}</b>
+            </p>
+        </div>
+  
+    </div>
+      
+  </ion-content>

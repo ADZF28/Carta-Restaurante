@@ -20,8 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('Manager','ControlManagerController');
 Route::resource('InfoRestaurante','InfoRestauranteController');
 Route::resource('Restaurante','RestauranteController');
-Route::resource('Productos','ProductoController');
+Route::resource('Producto','ProductoController');
 Route::resource('Imagen','ImageController');
 Route::resource('Categoria','CategoriaController');
+Route::resource('Turno','TurnoController');
+
 //Route::get('probando/{ids}/{modelos}','ImageController@ValidarUsuario');
 Route::get('ImgBuscar/{id}/{modelo}', 'ImageController@BuscarImagen');

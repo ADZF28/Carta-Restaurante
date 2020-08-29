@@ -1,0 +1,52 @@
+<ion-header>
+  
+</ion-header>
+
+<ion-content>
+ 
+  <div class="container">
+
+    <div class="header" style="margin-top: 30px;">
+      <div class="title">
+        <img  src="../../assets/img/res2.png">
+      </div>
+      <h3 style="font-weight: bolder !important; margin-top: 0px; ">Carta Restaurante</h3>
+      <p style="margin-top:30px">Accede con cuenta de administrador.</p>
+    </div>
+
+    <div class="body">
+
+      <ion-list>
+        
+        <ion-item>
+          <ion-icon slot="start" name="at"></ion-icon>
+          <ion-input  [(ngModel)]="user" placeholder="User"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start" name="keypad-outline"></ion-icon>
+          <ion-input  [(ngModel)]="pas" placeholder="Cotraseña" type="password"></ion-input>
+        </ion-item>
+       
+    
+        <section class="full-width" >
+          <ion-button expand="block" size="large" style=" font-weight: bolder;" color="primary" (click)="vali()">Acceder</ion-button>
+        </section>
+
+       
+
+      </ion-list>
+       
+      <section class="full-width" >
+        <ion-button expand="block" size="large" style=" font-weight: bolder;" color="light" (click)="dire()">Regresar</ion-button>
+      </section>
+   
+    </div>
+
+    <div class="footer">
+      © Todos los derechos reservados
+    </div>
+
+  </div>
+
+</ion-content>

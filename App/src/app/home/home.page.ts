@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 import { CategoriaService } from '../Servicios/categoria.service';
 import { ProductoService } from '../Servicios/producto.service';
-
+import { ActivatedRoute } from '@angular/router';
+import { TurnoService } from '../Servicios/turno.service';
 
 @Component({
   selector: 'app-home',
@@ -13,17 +14,24 @@ import { ProductoService } from '../Servicios/producto.service';
 export class HomePage implements OnInit{
 
   buscar:boolean=false;
-  cate:any[];
-  productos:any[];
-  productosCate:any[]=[""];
+  cate:any=[];
+  turn:any=[];
+  productos:any=[];
+  productosCate:any=[];
   IdRestaurante:string="1";
   TodosProductos:boolean=true;
   FiltroProductos:boolean=false;
+  SelectValue:string;
+  texto:string; 
   index:number;
+  mostrarc:boolean=false;
   constructor(
     private menu: MenuController,
     private Categoria:CategoriaService, 
-    private Producto:ProductoService
+    private Producto:ProductoService,
+    public activity:ActivatedRoute,
+    private toast:ToastController,
+    private turno:TurnoService
     ) {}
   
   
@@ -41,17 +49,22 @@ export class HomePage implements OnInit{
     this.menu.enable(true, 'first');
     this.menu.open('first');
   }
+  mostrarCate(){
+    this.mostrarc=!this.mostrarc;
+  }
   
   ngOnInit(){
+    this.IdRestaurante=this.activity.snapshot.paramMap.get('id');
+    this.CargarTurno();
     this.CargarCategoria();
     this.MostrarProductos();
   }
 
-  CargarCategoria() {
+  CargarTurno() {
     
-      this.Categoria.CategoriaObtener()
+      this.turno.TurnoObte()
         .then((data) => {
-          this.cate = data["result"];
+          this.turn = data["result"];
                 
         })
         .catch((error) => {
@@ -60,25 +73,48 @@ export class HomePage implements OnInit{
         });
       
   }
+  CargarCategoria() {
+    
+    this.Categoria.CategoriaObtener()
+      .then((data) => {
+        this.cate = data["result"];
+              
+      })
+      .catch((error) => {
+        debugger
+        console.log(error);
+      });
+    
+}
+  async Vacio(mensaje : string) {
+    const toast = await this.toast.create({
+      message: mensaje,
+      duration: 3000,
+      color: "warning",
+    });
+    toast.present();
+   
+  }
   Cambiocat(){
-    debugger
+    
     this.TodosProductos=false;
     this.FiltroProductos=true;
-    this.productosCate=null;
+    this.productosCate=[];
     if (this.productos.length > 0) {
+      let i=0;
       for (let data of this.productos) {
-        if(data['idcategoria']=="1"){
+        if(data['idcategoria']==this.SelectValue){
+        
+          this.productosCate[i]=data;
+          i++;
 
-          
-          this.productosCate.push(data);
         }
-        this.index++;
       }
 
       
     } else {
 
-      
+      this.Vacio("No hay productos en esta categoria. ");
     }
   }
 
@@ -87,7 +123,11 @@ export class HomePage implements OnInit{
     this.Producto.ProductosObtener(this.IdRestaurante)
       .then((data) => {
         this.productos = data["result"];
-              
+        
+          if(this.productos.length<0){
+            this.Vacio("El restaurante no contiene productos.");
+
+          } 
       })
       .catch((error) => {
         debugger
@@ -95,5 +135,6 @@ export class HomePage implements OnInit{
       });
     
   }
+ 
   
 }

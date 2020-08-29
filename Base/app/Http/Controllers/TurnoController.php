@@ -14,7 +14,8 @@ class TurnoController extends Controller
      */
     public function index()
     {
-        //
+        $datos=Turno::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
