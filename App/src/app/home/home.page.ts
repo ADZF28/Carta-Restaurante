@@ -1,9 +1,12 @@
 import { Component, OnInit} from '@angular/core';
-import { MenuController, ToastController } from '@ionic/angular';
+import { MenuController, ToastController, ModalController } from '@ionic/angular';
 import { CategoriaService } from '../Servicios/categoria.service';
 import { ProductoService } from '../Servicios/producto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TurnoService } from '../Servicios/turno.service';
+import { NosotrosPage } from '../Paginas/nosotros/nosotros.page';
+import { TerminosCondicionesPage } from '../Paginas/terminos-condiciones/terminos-condiciones.page';
+
 
 @Component({
   selector: 'app-home',
@@ -20,18 +23,23 @@ export class HomePage implements OnInit{
   productosCate:any=[];
   IdRestaurante:string="1";
   TodosProductos:boolean=true;
-  FiltroProductos:boolean=false;
+  //FiltroProductos:boolean=false;
   SelectValue:string;
   texto:string; 
   index:number;
   mostrarc:boolean=false;
+  Valorcategoria:string;
+  idCategoria:string;
+ 
   constructor(
     private menu: MenuController,
     private Categoria:CategoriaService, 
     private Producto:ProductoService,
     public activity:ActivatedRoute,
     private toast:ToastController,
-    private turno:TurnoService
+    private turno:TurnoService,
+    private ruta:Router,
+    private modalCTRL:ModalController,
     ) {}
   
   
@@ -49,6 +57,7 @@ export class HomePage implements OnInit{
     this.menu.enable(true, 'first');
     this.menu.open('first');
   }
+
   mostrarCate(){
     this.mostrarc=!this.mostrarc;
   }
@@ -59,6 +68,14 @@ export class HomePage implements OnInit{
     this.CargarCategoria();
     this.MostrarProductos();
   }
+
+  Ir(){
+     this.menu.close();
+   // this.menu.open('end');
+    this.TodosProductos=true;
+  }
+
+
 
   CargarTurno() {
     
@@ -95,25 +112,47 @@ export class HomePage implements OnInit{
     toast.present();
    
   }
+
+
   Cambiocat(){
-    
     this.TodosProductos=false;
-    this.FiltroProductos=true;
+    //this.FiltroProductos=true;
     this.productosCate=[];
     if (this.productos.length > 0) {
       let i=0;
       for (let data of this.productos) {
-        if(data['idcategoria']==this.SelectValue){
-        
+        if(data['idturno']==this.SelectValue){
           this.productosCate[i]=data;
           i++;
-
         }
       }
-
+        if(this.productosCate.length==0){
+          this.Vacio("No hay productos en esta categoria. ");
+        }
       
     } else {
+      this.Vacio("No hay productos en esta categoria. ");
+    }
+  }
 
+  Cambiocat2(){
+    this.menu.close();
+    this.TodosProductos=false;
+    //this.FiltroProductos=true;
+    this.productosCate=[];
+    if (this.productos.length > 0) {
+      let i=0;
+      for (let data of this.productos) {
+        if(data['idcategoria']==this.Valorcategoria){
+          this.productosCate[i]=data;
+          i++;
+        }
+      }
+        if(this.productosCate.length==0){
+          this.Vacio("No hay productos en esta categoria. ");
+        }
+      
+    } else {
       this.Vacio("No hay productos en esta categoria. ");
     }
   }
@@ -122,19 +161,40 @@ export class HomePage implements OnInit{
     
     this.Producto.ProductosObtener(this.IdRestaurante)
       .then((data) => {
-        this.productos = data["result"];
+        this.productos = data['result'];
         
-          if(this.productos.length<0){
+          if(this.productos==null || this.productos==""){
             this.Vacio("El restaurante no contiene productos.");
 
           } 
       })
       .catch((error) => {
-        debugger
         console.log(error);
       });
     
   }
+
+
+  async nosotros(){
+    const modal= await this.modalCTRL.create({
+      component: NosotrosPage,
+      componentProps: {
+        id:  this.IdRestaurante,
+      }
+      
+    });
+    return modal.present();
+  }
+
+  async terminosCondiciones(){
+    const modal= await this.modalCTRL.create({
+      component: TerminosCondicionesPage,
+      
+      
+    });
+    return modal.present();
+  }
+
  
   
 }

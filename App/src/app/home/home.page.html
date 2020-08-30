@@ -1,3 +1,7 @@
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+
 <ion-header [translucent]="true">
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
@@ -17,58 +21,79 @@
 
 </ion-header>
 
+<ng-template #Turnos>
+  <div class="wrapper">
+    <div  *ngFor="let item of productosCate | filtro : texto : 'nombre'" style="margin: 5px; background-color: rgb(125, 235, 229);">
+      <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg" >
+      <ion-label style="padding-left: 5px; padding-right: 15px;">{{item.nombre}}</ion-label> 
+      <ion-label > $ {{item.precio}}</ion-label>    
+    </div>
+  </div> 
+</ng-template>
+
+
+
 <ion-content >
   <ion-searchbar showCancelButton="focus" *ngIf="buscar" [(ngModel)]="texto" name="busca" ></ion-searchbar>
 
   <ion-content >
  
     <ion-menu side="start" menuId="first" contentId="main">
+
       <ion-header style="background-image: url(https://i.pinimg.com/originals/69/d3/56/69d3569f96f087458308052aa137ab2c.jpg);">
         <ion-toolbar color="secundary">
           <ion-title style="color: white; padding-left: 40px;">Opciones</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
-        <ion-list>
 
-          <ion-item>
+      <ion-content>
+
+        <ion-list>
+          <ion-item (click)="Ir()">
             <ion-icon name="home-outline" slot="start"></ion-icon>
-            <ion-label style="padding-left: 10px;">Principal</ion-label>
+            <ion-label style="padding-left: 10px;" >Principal</ion-label>
           </ion-item>
 
-          <ion-item (click)="mostrarCate()">
+          <ion-item>
+            <ion-icon name="fast-food-outline" slot="start"></ion-icon>
+            <ion-label style="padding-left: 10px;">Categorias</ion-label>
+            <ion-select interface="popover" [(ngModel)]="Valorcategoria"  (ionChange)="Cambiocat2()" >
+              <ion-select-option *ngFor="let cat of cate" value="{{cat.id}}">{{cat.categoria}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- <ion-item (click)="mostrarCate()">
             <ion-icon name="fast-food-outline" slot="start"></ion-icon>
             <ion-label style="padding-left: 10px;">Categorias</ion-label>
             <ion-icon name="chevron-down-outline" slot="end" *ngIf="!mostrarc"></ion-icon>
             <ion-icon name="chevron-up-outline" slot="end" *ngIf="mostrarc"></ion-icon>
             </ion-item>          
-            <ion-item-group  *ngIf="mostrarc"  >
-              <ion-item *ngFor="let cat of cate" style="border-bottom: 0px solid;">   
-                <ion-icon style="padding-left: 40px;" name="chevron-forward-outline"></ion-icon>         
-                <ion-label style="padding-left: 20px; font-size: 15px;">{{cat.categoria}}</ion-label>
+            <ion-item-group  *ngIf="mostrarc">
+              <ion-item *ngFor="let cat of cate" style="border-bottom: 0px solid;" (click)="funcion()" >   
+                <ion-icon style="padding-left: 40px;" name="chevron-forward-outline"></ion-icon> 
+                <ion-label style="padding-left: 20px; font-size: 15px;" >{{cat.categoria}}</ion-label>
               </ion-item>
-             
-            </ion-item-group>
+            </ion-item-group> -->
 
-          <ion-item>
+          <ion-item (click)="nosotros()">
             <ion-icon name="people-outline" slot="start"></ion-icon>
             <ion-label style="padding-left: 10px;">Nosotros</ion-label>
           </ion-item>
-          <ion-item>
+          <ion-item (click)="terminosCondiciones()">
             <ion-icon name="pricetags-outline" slot="start"></ion-icon>
             <ion-label style="padding-left: 10px;"> Terminos y Condiciones</ion-label>
           </ion-item>
          
         </ion-list>
+
       </ion-content>
     </ion-menu>
      
     <ion-router-outlet id="main"></ion-router-outlet>
 
 
-    <ion-list>
-          
-      <ion-item>
+    <ion-list>   
+      <ion-item >
         <ion-label>Seleccione Turno</ion-label>
         <ion-select  [(ngModel)]="SelectValue"  (ionChange)="Cambiocat()">
           <ion-select-option  *ngFor="let tur of turn" value="{{tur.id}}" >{{tur.turno}}</ion-select-option>
@@ -76,21 +101,14 @@
       </ion-item>
     </ion-list>
 
-  <div class="wrapper" *ngIf="TodosProductos"  >
-    <div  *ngFor="let item of productos" style="margin: 5px; background-color: rgb(125, 235, 229);">
+  <div class="wrapper" *ngIf="TodosProductos else Turnos"  >
+    <div  *ngFor="let item of productos | filtro : texto : 'nombre'" style="margin: 5px; background-color: rgb(125, 235, 229);">
       <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg" >
       <ion-label style="padding-left: 5px; padding-right: 15px;">{{item.nombre}}</ion-label> 
       <ion-label > $ {{item.precio}}</ion-label>
     </div>
   </div>
-  <div class="wrapper" *ngIf="FiltroProductos"  >
-    <div  *ngFor="let item of productosCate" style="margin: 5px; background-color: rgb(125, 235, 229);">
-      <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg" >
-      <ion-label style="padding-left: 5px; padding-right: 15px;">{{item.nombre}}</ion-label> 
-      <ion-label > $ {{item.precio}}</ion-label>
-      
-    </div>
-  </div>  
+  
  
 
 </ion-content>

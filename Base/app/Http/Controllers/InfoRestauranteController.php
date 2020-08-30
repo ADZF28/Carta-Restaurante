@@ -14,8 +14,7 @@ class InfoRestauranteController extends Controller
      */
     public function index()
     {
-        $datos=InfoRestaurante::all();  
-        return response()->json(['result'=>$datos]);
+        
     }
 
     /**

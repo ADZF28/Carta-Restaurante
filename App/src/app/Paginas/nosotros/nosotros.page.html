@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"  (click)="Cerrar()">
+      <ion-icon name="arrow-back-outline" style="font-size: 25px; padding-left: 10px;"></ion-icon>
+    </ion-buttons>
+    <ion-title>Nosotros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+          <div *ngFor="let item of informacion">
+            <h3>{{item.direccion}}</h3>
+            <h3>{{item.contacto}}</h3>
+            <h3>{{item.horario}}</h3>
+          </div>
+</ion-content>
