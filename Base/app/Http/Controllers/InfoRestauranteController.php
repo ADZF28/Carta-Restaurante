@@ -41,6 +41,8 @@ class InfoRestauranteController extends Controller
             $Dato->direccion=$request->direccion;
             $Dato->horario=$request->horario;
             $Dato->contacto=$request->contacto;
+            $Dato->eslogan=$request->eslogan;
+            $Dato->descripcion=$request->descripcion;
             $Dato->save();
 
             return response()->json(['mensaje'=>"Datos Guardados.", 'code'=>'201']);
@@ -86,6 +88,8 @@ class InfoRestauranteController extends Controller
         $Dato->direccion=$request->direccion;
         $Dato->horario=$request->horario;
         $Dato->contacto=$request->contacto;
+        $Dato->eslogan=$request->eslogan;
+        $Dato->descripcion=$request->descripcion;
         $Dato->update();
 
         
