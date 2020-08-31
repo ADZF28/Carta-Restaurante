@@ -15,6 +15,8 @@ export class EscaneoPage implements OnInit {
   datocodificado: any;
   datoscaneado: {};
   id:string;
+  nombre:string;
+
 
   constructor(
     private barcodeScanner: BarcodeScanner,
@@ -79,8 +81,9 @@ export class EscaneoPage implements OnInit {
         if (Restau.length > 0) {
           for (let data of Restau) {
             this.id=data['id'];
+            this.nombre=data['nombre'];
           }
-          this.ruta.navigate(["/home/"+this.id ]);
+          this.ruta.navigate(["/home/"+this.id+"/"+this.nombre]);
           this.ingreso( String(this.datoscaneado));
         } else {
         

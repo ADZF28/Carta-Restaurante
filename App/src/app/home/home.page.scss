@@ -34,4 +34,9 @@
   grid-template-columns: 50% 50% 50%;
 
 }
+.fondo {
+
+  --background: url(../../assets/img/fondop.jpg) 0 0/100% 100% no-repeat;
+  --opacity: 20;
+}
 

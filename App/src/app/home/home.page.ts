@@ -30,7 +30,7 @@ export class HomePage implements OnInit{
   mostrarc:boolean=false;
   Valorcategoria:string;
   idCategoria:string;
- 
+  NombreRestaurante:string;
   constructor(
     private menu: MenuController,
     private Categoria:CategoriaService, 
@@ -64,6 +64,7 @@ export class HomePage implements OnInit{
   
   ngOnInit(){
     this.IdRestaurante=this.activity.snapshot.paramMap.get('id');
+    this.NombreRestaurante=this.activity.snapshot.paramMap.get('nombre');
     this.CargarTurno();
     this.CargarCategoria();
     this.MostrarProductos();
@@ -180,6 +181,7 @@ export class HomePage implements OnInit{
       component: NosotrosPage,
       componentProps: {
         id:  this.IdRestaurante,
+        nombre: this.NombreRestaurante
       }
       
     });

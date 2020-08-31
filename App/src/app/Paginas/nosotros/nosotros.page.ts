@@ -10,14 +10,19 @@ import { RestauranteService } from '../../Servicios/restaurante.service';
 })
 export class NosotrosPage implements OnInit {
  @Input() id;
+ @Input() nombre;
+
  informacion:any=[];
 
   constructor(private modalController:ModalController,
     private infoRestauran: RestauranteService) { }
 
   ngOnInit() {
+    
     this.MostrarInformacion();
     console.log(this.id);
+    console.log(this.nombre);
+
   }
 
   Cerrar(){
@@ -25,6 +30,7 @@ export class NosotrosPage implements OnInit {
   }
 
   MostrarInformacion() {
+    
     this.infoRestauran.ObtenerInformacionRestaurante(this.id)
       .then((data) => {
         this.informacion = data['result'];
