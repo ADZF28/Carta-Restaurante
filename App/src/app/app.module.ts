@@ -12,19 +12,25 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { FormsModule } from '@angular/forms';
 import { PipesModule } from './pipes/pipes.module';
-
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule, FormsModule,
-  PipesModule],
+  PipesModule,NgxQRCodeModule],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    BarcodeScanner
-  ],
+    BarcodeScanner,
+    Base64ToGallery,
+    AndroidPermissions
+  ], 
+    
+  
   bootstrap: [AppComponent]
 })
 export class AppModule {}

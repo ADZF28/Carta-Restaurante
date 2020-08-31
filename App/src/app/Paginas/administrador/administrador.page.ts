@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { Routes, Router } from "@angular/router";
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.page.html',
@@ -11,16 +13,17 @@ export class AdministradorPage implements OnInit {
   constructor(    
     private ruta: Router,
     private menu:MenuController
+   
     ) {}
 
   ngOnInit() {
   }
-  openFirst() {
+  openFirst2() {
  
     this.menu.enable(true, 'first');
     this.menu.open('first');
   }
-  salir(){
+  salir2(){
     this.ruta.navigate(["/"]);
   }
 }
