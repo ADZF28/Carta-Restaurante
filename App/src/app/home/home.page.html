@@ -22,13 +22,28 @@
 </ion-header>
 
 <ng-template #Turnos>
-  <div class="wrapper">
-    <div  *ngFor="let item of productosCate | filtro : texto : 'nombre'" style="margin: 5px; background-color: rgb(125, 235, 229);">
-      <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg" >
-      <ion-label style="padding-left: 5px; padding-right: 15px;">{{item.nombre}}</ion-label> 
-      <ion-label > $ {{item.precio}}</ion-label>    
-    </div>
-  </div> 
+  <ion-item *ngFor="let item of productosCate  | filtro : texto : 'nombre'" style="border-bottom: 1px solid rgb(178, 179, 180);">
+      
+    <ion-thumbnail slot="start" style="width: 200px; height: auto;">
+      <div>
+        <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg">
+      </div>
+    </ion-thumbnail>
+
+    <ion-label class="ion-text-wrap" >
+      <h2 style="text-align: justify; font-weight: bold; font-size: 14px;">{{item.nombre}}</h2>
+      <small>
+        <div  style="text-align: justify !important; padding-top:5px ;">
+          {{item.descripcion }}
+        </div>
+      </small>       
+      <ion-chip outline color="tertiary"> 
+        <ion-icon name="restaurant"></ion-icon>
+        <ion-label>{{item.precio | currency:'USD'}}</ion-label>
+      </ion-chip>
+    </ion-label>
+ 
+  </ion-item>
 </ng-template>
 
 
@@ -101,14 +116,13 @@
     </ion-list>
 
 
-  <ion-list> 
+  <ion-list *ngIf="TodosProductos else Turnos">  
     <ion-item *ngFor="let item of productos | filtro : texto : 'nombre'" style="border-bottom: 1px solid rgb(178, 179, 180);">
       
         <ion-thumbnail slot="start" style="width: 200px; height: auto;">
           <div>
             <img src="https://www.deliciosi.com/images/2000/2093/encebollado-de-pescado.jpg">
           </div>
-          
         </ion-thumbnail>
 
         <ion-label class="ion-text-wrap" >
@@ -117,13 +131,11 @@
             <div  style="text-align: justify !important; padding-top:5px ;">
               {{item.descripcion }}
             </div>
-          </small>
-                   
+          </small>       
           <ion-chip outline color="tertiary"> 
             <ion-icon name="restaurant"></ion-icon>
             <ion-label>{{item.precio | currency:'USD'}}</ion-label>
           </ion-chip>
-  
         </ion-label>
      
       </ion-item>
