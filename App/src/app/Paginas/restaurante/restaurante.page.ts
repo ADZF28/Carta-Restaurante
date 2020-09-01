@@ -14,7 +14,7 @@ import { ImagenService } from '../../Servicios/imagen.service';
   templateUrl: "./restaurante.page.html",
   styleUrls: ["./restaurante.page.scss"],
 })
-export class RestaurantePage {
+export class RestaurantePage implements OnInit{
   nombre: string;
   
   imagenm: string;
@@ -439,9 +439,9 @@ export class RestaurantePage {
       mimeType: 'image/jpeg',
       headers: {}
     }
-    fileTransfer.upload(this.myphoto, encodeURI('https://agile-scrubland-87518.herokuapp.com/api/v01/users/imagen/' ), options)
+    fileTransfer.upload(this.myphoto, encodeURI('https://pacific-brook-35350.herokuapp.com/api/v01/users/imagen/' ), options)
       .then((data) => {
-        this.UrlImagen = "https://agile-scrubland-87518.herokuapp.com/imagenes/" + this.imagenBD;
+        this.UrlImagen = "https://pacific-brook-35350.herokuapp.com/Imagenes/" + this.imagenBD;
         this.mensa("Imagen actualizada", "secondary");
         loading.dismiss();
       }, (err) => {

@@ -89,9 +89,7 @@
       "cordova-plugin-file": {},
       "cordova-plugin-android-permissions": {},
       "cordova-base64-to-gallery": {},
-      "cordova-plugin-camera": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "android"

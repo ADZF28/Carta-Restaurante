@@ -101,7 +101,7 @@ export class RestauranteService {
   }
   
   ModificarInfoRestaurante(data:any,id:string) {
-    let  url = 'http://127.0.0.1:8000/api/InfoRestaurante/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/InfoRestaurante/'+id;
     return new Promise ((resolve, reject) => {
       this.http.put(url, data).subscribe(res => {
         resolve(res);
