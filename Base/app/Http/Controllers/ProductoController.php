@@ -14,7 +14,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        
+        $datos=Producto::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -76,9 +77,10 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $datos=Producto::find($request->id);
+
+        $datos=Producto::where('id', $id)->get()->first(); 
         $datos->nombre=$request->nombre;
         $datos->precio=$request->precio;
         $datos->descripcion=$request->descripcion;
@@ -86,7 +88,6 @@ class ProductoController extends Controller
         $datos->idcategoria=$request->idcategoria;
         $datos->idturno=$request->idturno;
         $datos->update();
-
         
         return response()->json(['mensaje'=>"Dato Actualizado.", 'code'=>'201']);
     }
