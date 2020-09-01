@@ -56,10 +56,6 @@
       
       <ion-card style="padding-top: 1px;" >
         
-       
-                   
-          
-        
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
           <center>      
             <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
@@ -73,49 +69,85 @@
 
           <ion-item *ngIf="agrega" >
             <ion-label position="floating">Restaurante</ion-label>
-            <ion-input type="email" name="email"  [(ngModel)]="nombre" ></ion-input>
+            <ion-input type="email"   [(ngModel)]="nombre" ></ion-input>
             <ion-icon style="padding-top: 25px;" name="restaurant" slot="start" ></ion-icon>
           </ion-item>
 
-          <ion-item  *ngIf="agrega" >
+         
+        </div>
+
+          <ion-button  *ngIf="agrega" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregar()">Guardar </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card style="padding-top: 1px;" >
+        
+        <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
+          <center>      
+            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+            Agregar una Sucursal
+            <ion-icon (click)="compri4()" style="font-size: 20px; padding-left: 150px;" [name]="addsucu===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+  
+          </ion-label>
+        </center>
+
+        <ion-list *ngIf="addsucu">   
+          <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
+            <ion-label>Restaurante</ion-label>
+            <ion-select  [(ngModel)]="SelectValue" >
+              <ion-select-option  *ngFor="let item of Arestau" value="{{item.id}}" >{{item.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+         <div style="margin: 10px; margin-bottom: 15px;"> 
+
+
+          <ion-item  *ngIf="addsucu" >
+            <ion-label position="floating">Sucursal</ion-label>
+            <ion-input type="email"   [(ngModel)]="sucursals" ></ion-input>
+            <ion-icon style="padding-top: 25px;" name="bookmarks-outline" slot="start" ></ion-icon>
+          </ion-item>
+
+          <ion-item  *ngIf="addsucu" >
             <ion-label position="floating">Contato</ion-label>
-            <ion-input type="email" name="email"  [(ngModel)]="contacto" ></ion-input>
+            <ion-input type="email"   [(ngModel)]="contactos" ></ion-input>
             <ion-icon style="padding-top: 25px;" name="call-outline" slot="start" ></ion-icon>
           </ion-item>
          
-          <ion-item  *ngIf="agrega" >
+          <ion-item  *ngIf="addsucu" >
             <ion-label position="floating">Ubicación</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="direccion" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="direccions" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="location-outline" slot="start" ></ion-icon>
           </ion-item>
 
-          <ion-item  *ngIf="agrega" >
+          <ion-item  *ngIf="addsucu" >
             <ion-label position="floating">Horario de atención</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="horario" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="horarios" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="calendar-outline" slot="start" ></ion-icon>
           </ion-item>
 
-          <ion-item   *ngIf="agrega">
+          <ion-item   *ngIf="addsucu">
             <ion-label position="floating">Información</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="descripcion" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="descripcions" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="help-circle-outline" slot="start" ></ion-icon>
           </ion-item>
 
-          <ion-item  *ngIf="agrega" >
+          <ion-item  *ngIf="addsucu" >
             <ion-label position="floating">Eslogan</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="eslogan" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="eslogans" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="sunny-outline" slot="start" ></ion-icon>
           </ion-item>
  
 
         </div>
 
-          <ion-button  *ngIf="agrega" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregar()">Guardar </ion-button>
+          <ion-button  *ngIf="addsucu" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregarsucur()">Guardar</ion-button>
         </ion-card-content>
       </ion-card>
+
  
-      <ion-card>
-        
+      <ion-card>   
 
         <ion-card-content>
 
@@ -127,7 +159,7 @@
           </ion-label>
         </center>
 
-          
+        <ion-searchbar *ngIf="mostra" placeholder="Buscar" showCancelButton="focus"  [(ngModel)]="texto" name="busca" ></ion-searchbar>
        
          <div style="padding-top: 10px !important;"  *ngIf="mostra">
            <table style="width:95%; margin: 10px;">
@@ -135,9 +167,9 @@
                <th>Restaurante</th>
                <th>Opciones</th>
              </tr>
-             <tr >
-               <td>Rico Poolo</td>
-               <td>eli</td>
+             <tr *ngFor="let item of Arestau | filtro : texto : 'nombre'">
+               <td>{{item.nombre}}</td>
+               <td><ion-icon name="trash-outline" (click)="eliminar(item.id)" ></ion-icon></td>
              </tr> 
            </table>
          </div>
@@ -147,10 +179,6 @@
       </ion-card>
 
       <ion-card style="padding-top: 1px;" >
-        
-       
-                   
-          
         
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
           <center>      
@@ -163,55 +191,65 @@
 
         <ion-list *ngIf="actu">   
           <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
-            <ion-label>Seleccione</ion-label>
-            <ion-select  [(ngModel)]="SelectValue"  (ionChange)="Cambiocat()">
-              <ion-select-option  *ngFor="let tur of turn" value="{{tur.id}}" >{{tur.turno}}</ion-select-option>
+            <ion-label>Restaurante</ion-label>
+            <ion-select  [(ngModel)]="SelectRes"  (ionChange)="traerInfo()">
+              <ion-select-option  *ngFor="let item of Arestau" value="{{item.id}}" >{{item.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="actu">   
+          <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
+            <ion-label>Sucursal</ion-label>
+            <ion-select  [(ngModel)]="Selectsucu"  (ionChange)="recu()">
+              <ion-select-option  *ngFor="let item of Sucu" value="{{item.id}}" >{{item.sucursal}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-list>
 
          <div style="margin: 10px; margin-bottom: 15px;"> 
 
-          <ion-item *ngIf="actu" >
-            <ion-label position="floating">Restaurante</ion-label>
-            <ion-input type="email" name="email"  [(ngModel)]="nombre" ></ion-input>
-            <ion-icon style="padding-top: 25px;" name="restaurant" slot="start" ></ion-icon>
+         
+          <ion-item  *ngIf="actu" >
+            <ion-label position="floating">Sucursal</ion-label>
+            <ion-input type="email"   [(ngModel)]="sucursalm" ></ion-input>
+            <ion-icon style="padding-top: 25px;" name="bookmarks-outline" slot="start" ></ion-icon>
           </ion-item>
 
           <ion-item  *ngIf="actu" >
             <ion-label position="floating">Contato</ion-label>
-            <ion-input type="email" name="email"  [(ngModel)]="contacto" ></ion-input>
+            <ion-input type="email"   [(ngModel)]="contactom" ></ion-input>
             <ion-icon style="padding-top: 25px;" name="call-outline" slot="start" ></ion-icon>
           </ion-item>
          
           <ion-item  *ngIf="actu" >
             <ion-label position="floating">Ubicación</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="direccion" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="direccionm" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="location-outline" slot="start" ></ion-icon>
           </ion-item>
 
           <ion-item  *ngIf="actu" >
             <ion-label position="floating">Horario de atención</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="horario" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="horariom" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="calendar-outline" slot="start" ></ion-icon>
           </ion-item>
 
           <ion-item   *ngIf="actu">
             <ion-label position="floating">Información</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="descripcion" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="descripcionm" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="help-circle-outline" slot="start" ></ion-icon>
           </ion-item>
 
           <ion-item  *ngIf="actu" >
             <ion-label position="floating">Eslogan</ion-label>
-            <ion-textarea type="email" name="email"  [(ngModel)]="eslogan" ></ion-textarea>
+            <ion-textarea type="email"   [(ngModel)]="esloganm" ></ion-textarea>
             <ion-icon style="padding-top: 25px;" name="sunny-outline" slot="start" ></ion-icon>
           </ion-item>
  
 
         </div>
 
-          <ion-button  *ngIf="actu" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregar()">Actualizar </ion-button>
+          <ion-button  *ngIf="actu" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="modificar()()">Actualizar </ion-button>
         </ion-card-content>
       </ion-card>
 

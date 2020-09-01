@@ -20,13 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./Paginas/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'nosotros',
-    loadChildren: () => import('./Paginas/nosotros/nosotros.module').then( m => m.NosotrosPageModule)
-  },
-  {
-    path: 'terminos-condiciones',
-    loadChildren: () => import('./Paginas/terminos-condiciones/terminos-condiciones.module').then( m => m.TerminosCondicionesPageModule)
-  },  {
     path: 'restaurante',
     loadChildren: () => import('./Paginas/restaurante/restaurante.module').then( m => m.RestaurantePageModule)
   },

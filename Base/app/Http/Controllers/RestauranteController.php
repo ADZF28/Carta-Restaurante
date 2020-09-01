@@ -14,7 +14,8 @@ class RestauranteController extends Controller
      */
     public function index()
     {
-        //
+        $datos=Restaurante::all();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -35,12 +36,20 @@ class RestauranteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $recuperar=Restaurante::where('nombre', $request->nombre)->get()->first();
+        if($recuperar!=null){
+            return response()->json(['resul'=>'Este correo ya se encuentra registrado','code'=>'201']);
+        }else{
             $Dato=new Restaurante();
             $Dato->nombre=$request->nombre;
             $Dato->save();
+            return response()->json(['mensaje'=>"Dato Guardado.", 'code'=>'200']);
+        }
 
-            return response()->json(['mensaje'=>"Dato Guardado.", 'code'=>'201']);
+            
+
+            
     }
 
     /**
@@ -91,7 +100,7 @@ class RestauranteController extends Controller
      */
     public function destroy($id)
     {
-        $datos=Restaurante::where('idrestaurante', $id)->get()->first();
+        $datos=Restaurante::find($id);
         $datos->delete();
 
         

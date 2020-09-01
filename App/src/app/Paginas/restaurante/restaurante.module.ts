@@ -8,13 +8,15 @@ import { RestaurantePageRoutingModule } from './restaurante-routing.module';
 
 import { RestaurantePage } from './restaurante.page';
 import { MenuComponent } from '../../Componentes/menu/menu.component';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RestaurantePageRoutingModule    
+    RestaurantePageRoutingModule,
+    PipesModule
 
   ],
   declarations: [RestaurantePage,MenuComponent]

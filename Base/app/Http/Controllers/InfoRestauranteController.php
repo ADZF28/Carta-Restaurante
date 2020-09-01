@@ -43,6 +43,7 @@ class InfoRestauranteController extends Controller
             $Dato->contacto=$request->contacto;
             $Dato->eslogan=$request->eslogan;
             $Dato->descripcion=$request->descripcion;
+            $Dato->sucursal=$request->sucursal;
             $Dato->save();
 
             return response()->json(['mensaje'=>"Datos Guardados.", 'code'=>'201']);
@@ -81,15 +82,18 @@ class InfoRestauranteController extends Controller
      * @param  \App\InfoRestaurante  $infoRestaurante
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-        $Dato=InfoRestaurante::find($request->id);
+        
+        $Dato=InfoRestaurante::where('id',$id)->get()->first();
         $Dato->idrestaurante=$request->idrestaurante;
         $Dato->direccion=$request->direccion;
         $Dato->horario=$request->horario;
         $Dato->contacto=$request->contacto;
         $Dato->eslogan=$request->eslogan;
         $Dato->descripcion=$request->descripcion;
+        $Dato->sucursal=$request->sucursal;
+
         $Dato->update();
 
         

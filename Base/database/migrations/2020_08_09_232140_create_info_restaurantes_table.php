@@ -21,6 +21,7 @@ class CreateInfoRestaurantesTable extends Migration
             $table->string('horario');
             $table->string('eslogan');
             $table->string('descripcion');
+            $table->string('sucursal');
             $table->timestamps();
             $table->foreign('idrestaurante')->references('id')->on('restaurantes')->onDelete('cascade'); 
            

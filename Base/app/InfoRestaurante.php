@@ -10,7 +10,7 @@ class InfoRestaurante extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'idrestaurante','direccion','horario','contacto','eslogan','descripcion',
+        'idrestaurante','direccion','horario','contacto','eslogan','descripcion','sucursal',
     ];
     public function Rrestaurante()
     {
