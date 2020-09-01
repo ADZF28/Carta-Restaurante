@@ -2,6 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { MenuController, NavController, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { RestauranteService } from "../../Servicios/restaurante.service";
+import { ActionSheetController } from '@ionic/angular';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { LoadingController } from '@ionic/angular';
+//import { Storage } from '@ionic/storage';
+import { ImagenService } from '../../Servicios/imagen.service';
 
 @Component({
   selector: "app-restaurante",
@@ -10,7 +16,7 @@ import { RestauranteService } from "../../Servicios/restaurante.service";
 })
 export class RestaurantePage {
   nombre: string;
-
+  
   imagenm: string;
   direccionm: string;
   descripcionm: string;
@@ -30,21 +36,38 @@ export class RestaurantePage {
   agrega: boolean = false;
   mostra: boolean = false;
   actu: boolean = false;
-  addsucu: boolean =false;
+  addsucu: boolean = false;
+  mosinfo:  boolean = false;
   aprobado: boolean = false;
-  SelectRes:string;
-  SelectValue:string;
-  Selectsucu:string;
-  
-  
+
+  SelectRes: string;
+  SelectValue: string;
+  Selectsucu: string;
+  SelectorSucursal:string;
+
   Arestau: any = [];
-  Sucu:any=[];
+  Sucu: any = [];
+  MosSucu: any = [];
+
+  imageURI: any;
+  UrlImagen: any;
+  imagenBD: any;
+  msgdata: any;
+  myphoto: any;
+  
+
   constructor(
     private ruta: Router,
+    public navCtrl: NavController,
     private menu: MenuController,
     private restaura: RestauranteService,
-    private toast: ToastController
-  ) {}
+    private toast: ToastController,
+    private action: ActionSheetController,
+    private camera: Camera,
+    public loadingCtrl: LoadingController,
+    private transfer: FileTransfer,
+    private img:ImagenService
+  ) { }
 
   ngOnInit(): void {
     this.traerRestau();
@@ -55,14 +78,31 @@ export class RestaurantePage {
     this.restaura
       .TraerInfoRestaurante(this.SelectRes)
       .then((data) => {
-        
+
         this.Sucu = data["result"];
-       if(this.Sucu.length<1){
-        this.mensa("Este restaurnate no cuenta con sucursales.","warning");
-       }
+        if (this.Sucu.length < 1) {
+          this.mensa("Este restaurnate no cuenta con sucursales.", "warning");
+        }
       })
       .catch((error) => {
-      //  debugger;
+        //  debugger;
+        console.log(error);
+      });
+  }
+
+  MostrarInfo() {
+    
+    this.restaura
+      .TraerInfoRestaurante(this.SelectorSucursal)
+      .then((data) => {
+
+        this.MosSucu = data["result"];
+        if (this.MosSucu.length < 1) {
+          this.mensa("Este restaurnate no cuenta con sucursales.", "warning");
+        }
+      })
+      .catch((error) => {
+        //  debugger;
         console.log(error);
       });
   }
@@ -104,13 +144,16 @@ export class RestaurantePage {
   compri3() {
     this.actu = !this.actu;
   }
-  compri4(){
-    this.addsucu=!this.addsucu;
+  compri4() {
+    this.addsucu = !this.addsucu;
+  }
+  compri5() {
+    this.mosinfo = !this.mosinfo;
   }
   agregar() {
     if (
       this.nombre == "" ||
-      this.nombre == null 
+      this.nombre == null
     ) {
       this.mensa("Se deben llenar todos los campos.", "warning");
     } else {
@@ -121,6 +164,7 @@ export class RestaurantePage {
       this.restaura
         .AgregarRestaurante(datosR)
         .then((data) => {
+          
           if (data["code"] == "201") {
             this.nombre = "";
             this.mensa(
@@ -134,30 +178,31 @@ export class RestaurantePage {
           }
         })
         .catch((error) => {
-       //   debugger
+          //   debugger
         });
-      
+
     }
   }
-  recu(){
-   
-    for(let item of this.Sucu){
-      if(this.Selectsucu==item['id']){
-        this.direccionm=item['direccion'];
-        this.descripcionm=item['descripcion'];
-        this.horariom=item['horario'];
-        this.contactom=item['contacto'];
-        this.esloganm=item['eslogan'];
-        this.sucursalm=item['sucursal'];
+  recu() {
+
+    for (let item of this.Sucu) {
+      if (this.Selectsucu == item['id']) {
+        this.direccionm = item['direccion'];
+        this.descripcionm = item['descripcion'];
+        this.horariom = item['horario'];
+        this.contactom = item['contacto'];
+        this.esloganm = item['eslogan'];
+        this.sucursalm = item['sucursal'];
       }
     }
   }
   agregarsucur() {
 
     if (
-      
-      this.SelectValue==""||
-      this.SelectValue==null||
+      this.imagenBD==""||
+      this.imagenBD==null||
+      this.SelectValue == "" ||
+      this.SelectValue == null ||
       this.horarios == "" ||
       this.horarios == null ||
       this.contactos == "" ||
@@ -167,9 +212,9 @@ export class RestaurantePage {
       this.eslogans == "" ||
       this.eslogans == null ||
       this.descripcions == "" ||
-      this.descripcions == null||
-      this.sucursals==""||
-      this.sucursals==null
+      this.descripcions == null ||
+      this.sucursals == "" ||
+      this.sucursals == null
     ) {
       this.mensa("Se deben llenar todos los campos.", "warning");
     } else {
@@ -180,30 +225,39 @@ export class RestaurantePage {
         eslogan: this.eslogans,
         descripcion: this.descripcions,
         horario: this.horarios,
-        sucursal:this.sucursals,
+        sucursal: this.sucursals,
+      };
+      let datosImagen= {
+        ruta: this.UrlImagen,
+        modelo: "InfoRestaurane",
+        idmodelo: this.direccions
       };
       this.restaura
         .AgregarInfoRestaurante(datosIR)
         .then((data) => {
-          this.SelectValue="";
+          this.SelectValue = "";
           this.contactos = "";
           this.direccions = "";
           this.eslogans = "";
           this.horarios = "";
           this.descripcions = "";
-          this.sucursals="";
-          this.mensa("El restaurante se ha guardado.", "secondary");
+          this.sucursals = "";
+          this.imagenBD="";
+
+          this.uploadFile();
+
+          this.mensa("La sucursal se ha guardado.", "secondary");
         })
         .catch((error) => {
-        //  debugger;
+          //  debugger;
         });
-      
-      
+
+
     }
   }
 
   eliminar(id: string) {
-  
+
     this.restaura
       .EliminarRestaurante(id)
       .then((data) => {
@@ -211,20 +265,34 @@ export class RestaurantePage {
         this.mensa("El restaurante se ha eliminado.", "secondary");
       })
       .catch((error) => {
-       // debugger
+        // debugger
         console.log(error);
       });
-    
+
+  }
+  eliminar2(id: string) {
+
+    this.restaura
+      .EliminarInfoRestaurante(id)
+      .then((data) => {
+        this.traerRestau();
+        this.mensa("La sucursal se ha eliminado.", "secondary");
+      })
+      .catch((error) => {
+        // debugger
+        console.log(error);
+      });
+
   }
 
-  modificar(){
-  
+  modificar() {
+
     if (
-      
-      this.SelectRes==""||
-      this.SelectRes==null||
-      this.Selectsucu==""||
-      this.Selectsucu==null||
+
+      this.SelectRes == "" ||
+      this.SelectRes == null ||
+      this.Selectsucu == "" ||
+      this.Selectsucu == null ||
       this.horariom == "" ||
       this.horariom == null ||
       this.contactom == "" ||
@@ -234,13 +302,13 @@ export class RestaurantePage {
       this.esloganm == "" ||
       this.esloganm == null ||
       this.descripcionm == "" ||
-      this.descripcionm == null||
-      this.sucursalm==""||
-      this.sucursalm==null
+      this.descripcionm == null ||
+      this.sucursalm == "" ||
+      this.sucursalm == null
     ) {
       this.mensa("Se deben llenar todos los campos.", "warning");
     } else {
-     
+      debugger
       let datosIR = {
         idrestaurante: this.SelectRes,
         contacto: this.contactom,
@@ -248,25 +316,30 @@ export class RestaurantePage {
         eslogan: this.esloganm,
         descripcion: this.descripcionm,
         horario: this.horariom,
-        sucursal:this.sucursalm,
+        sucursal: this.sucursalm,
       };
       this.restaura
-        .ModificarInfoRestaurante(datosIR,this.SelectRes)
+        .ModificarInfoRestaurante(datosIR, this.Selectsucu)
         .then((data) => {
-          this.SelectRes="";
-          this.Selectsucu="";
+
+          debugger
+          this.SelectRes = "";
+          this.Selectsucu = "";
           this.contactom = "";
           this.direccionm = "";
           this.esloganm = "";
           this.horariom = "";
           this.descripcionm = "";
+          this.sucursalm="";
+          this.Arestau=[];
+          this.SelectorSucursal="";
           this.mensa("El restaurante se Actualizado.", "secondary");
         })
         .catch((error) => {
-        //  debugger;
+          //  debugger;
         });
-      
-      
+
+
     }
   }
   async mensa(mensaje: string, colo: string) {
@@ -277,4 +350,109 @@ export class RestaurantePage {
     });
     toast.present();
   }
+
+  async ActionsPhoto() {
+    const actionSheet = await this.action.create({
+      header: 'Opciones',
+      buttons: [{
+        text: 'Tomar foto',
+        icon: 'camera',
+        handler: () => {
+          this.takephoto();
+        }
+      }, 
+      {
+        text: 'Elegir de galería',
+        icon: 'images',
+        handler: () => {
+          this.getimage();
+        }
+      },
+      {
+        text: 'Eliminar foto actual',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.imagenBD="";
+        }
+      }, {
+        text: 'Cerrar',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
+  takephoto() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      saveToPhotoAlbum: true,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      targetWidth: 500,
+      targetHeight: 500,
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      this.myphoto = imageData;
+    }, (err) => {
+      // Handle error
+    });
+  }
+
+  getimage() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum: true,
+      targetWidth: 500,
+      targetHeight: 500,
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      this.myphoto = imageData;
+      }, (err) => {
+      // Handle error
+    });
+  }
+  cancelar() {
+    this.navCtrl.navigateForward(`search-wifi`);
+  }
+
+  async uploadFile() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando...',
+    });
+    await loading.present();
+    this.imagenBD = new Date().getTime() + ".jpg";
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: this.imagenBD,
+      chunkedMode: false,
+      httpMethod: 'post',
+      mimeType: 'image/jpeg',
+      headers: {}
+    }
+    fileTransfer.upload(this.myphoto, encodeURI('https://agile-scrubland-87518.herokuapp.com/api/v01/users/imagen/' ), options)
+      .then((data) => {
+        this.UrlImagen = "https://agile-scrubland-87518.herokuapp.com/imagenes/" + this.imagenBD;
+        this.mensa("Imagen actualizada", "secondary");
+        loading.dismiss();
+      }, (err) => {
+        console.log(err);
+        loading.dismiss();
+        this.mensa("Error al cargar la imagen", "warning");
+      });
+  }
+
+
+
+
+
 }

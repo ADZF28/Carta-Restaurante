@@ -15,6 +15,9 @@ import { PipesModule } from './pipes/pipes.module';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Camera} from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +30,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BarcodeScanner,
     Base64ToGallery,
-    AndroidPermissions
+    AndroidPermissions,
+    Camera,
+    FileTransfer,
+    File
   ], 
     
   
