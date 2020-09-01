@@ -9,7 +9,7 @@ export class ImagenService {
   constructor(private http:HttpClient) { }
 
   AgregarRestaurante(data: any) {
-    let  url = 'http://127.0.0.1:8000/api/Imagen';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Imagen';
     return new Promise ((resolve, reject) => {
       this.http.post(url,data).subscribe(res => {
         resolve(res);

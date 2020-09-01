@@ -11,7 +11,7 @@ export class RestauranteService {
   
   ObtenerIDRestaurante(Resta:string) {
    
-    let  url = 'http://127.0.0.1:8000/api/Restaurante/'+Resta;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Restaurante/'+Resta;
     //debugger
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
@@ -26,7 +26,7 @@ export class RestauranteService {
 
 
   ObtenerInformacionRestaurante(id:string) {
-    let  url = 'http://127.0.0.1:8000/api/InfoRestaurante/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/InfoRestaurante/'+id;
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
         resolve(res);
@@ -37,7 +37,7 @@ export class RestauranteService {
   }
   
   TodosRestaurante() {
-    let  url = 'http://127.0.0.1:8000/api/Restaurante';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Restaurante';
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
         resolve(res);
@@ -47,7 +47,7 @@ export class RestauranteService {
     });
   }
   TraerInfoRestaurante(id:string){
-    let  url = 'http://127.0.0.1:8000/api/InfoRestaurante/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/InfoRestaurante/'+id;
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
         resolve(res);
@@ -58,7 +58,7 @@ export class RestauranteService {
   }
 
   AgregarRestaurante(data: any) {
-    let  url = 'http://127.0.0.1:8000/api/Restaurante';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Restaurante';
     return new Promise ((resolve, reject) => {
       this.http.post(url,data).subscribe(res => {
         resolve(res);
@@ -68,7 +68,7 @@ export class RestauranteService {
     });
   }
   AgregarInfoRestaurante(data: any) {
-    let  url = 'http://127.0.0.1:8000/api/InfoRestaurante';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/InfoRestaurante';
     return new Promise ((resolve, reject) => {
       this.http.post(url,data).subscribe(res => {
         resolve(res);
@@ -79,7 +79,7 @@ export class RestauranteService {
   }
 
   EliminarRestaurante(id:string) {
-    let  url = 'http://127.0.0.1:8000/api/Restaurante/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Restaurante/'+id;
     return new Promise ((resolve, reject) => {
       this.http.delete(url).subscribe(res => {
         resolve(res);
@@ -90,7 +90,7 @@ export class RestauranteService {
   }
 
   EliminarInfoRestaurante(id:string) {
-    let  url = 'http://127.0.0.1:8000/api/InfoRestaurante/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/InfoRestaurante/'+id;
     return new Promise ((resolve, reject) => {
       this.http.delete(url).subscribe(res => {
         resolve(res);

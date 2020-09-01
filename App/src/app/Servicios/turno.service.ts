@@ -10,7 +10,7 @@ export class TurnoService {
 
  TurnoObte() {
    
-    let  url = 'http://127.0.0.1:8000/api/Turno';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Turno';
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
         resolve(res);

@@ -10,7 +10,7 @@ export class ProductoService {
 
   ProductosObtener(idResta:string) {
    
-    let  url = 'http://127.0.0.1:8000/api/Producto/'+idResta;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Producto/'+idResta;
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
         resolve(res);
@@ -26,7 +26,7 @@ export class ProductoService {
   
   AllProductosObtener() {
    
-    let  url = 'http://127.0.0.1:8000/api/Producto';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Producto';
     return new Promise ((resolve, reject) => {
       this.http.get(url).subscribe(res => {
         resolve(res);
@@ -39,7 +39,7 @@ export class ProductoService {
 
   AgregarProductos(data:any) {
    
-    let  url = 'http://127.0.0.1:8000/api/Producto';
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Producto';
     return new Promise ((resolve, reject) => {
       this.http.post(url, data).subscribe(res => {
         resolve(res);
@@ -52,7 +52,7 @@ export class ProductoService {
 
   ActualizarProductos(data:any,id:string) {
    
-    let  url = 'http://127.0.0.1:8000/api/Producto/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Producto/'+id;
     return new Promise ((resolve, reject) => {
       this.http.put(url, data).subscribe(res => {
         resolve(res);
@@ -66,7 +66,7 @@ export class ProductoService {
 
   EliminarProductos(id:string) {
    
-    let  url = 'http://127.0.0.1:8000/api/Producto/'+id;
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Producto/'+id;
     return new Promise ((resolve, reject) => {
       this.http.delete(url).subscribe(res => {
         resolve(res);
