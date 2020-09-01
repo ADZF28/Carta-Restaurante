@@ -85,7 +85,7 @@ class InfoRestauranteController extends Controller
     public function update(Request $request,$id)
     {
         
-        $Dato=InfoRestaurante::where('id',$id)->get()->first();
+        $Dato=InfoRestaurante::find($id);
         $Dato->idrestaurante=$request->idrestaurante;
         $Dato->direccion=$request->direccion;
         $Dato->horario=$request->horario;
@@ -108,7 +108,7 @@ class InfoRestauranteController extends Controller
      */
     public function destroy($id)
     {
-        $datos=InfoRestaurante::where('id', $id)->get()->first();
+        $datos=InfoRestaurante::where('idrestaurante', $id)->get()->first();
         $datos->delete();
 
         

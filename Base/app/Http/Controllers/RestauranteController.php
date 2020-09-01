@@ -82,9 +82,9 @@ class RestauranteController extends Controller
      * @param  \App\Restaurante  $restaurante
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-        $Dato=Restaurante::find($request->id);
+        $Dato=Restaurante::find($id);
         $Dato->nombre=$request->nombre;
         $Dato->update();
 

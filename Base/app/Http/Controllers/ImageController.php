@@ -36,13 +36,32 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $Dato=new Image();
-        $Dato->ruta=$request->ruta;
-        $Dato->modelo=$request->modelo;
-        $Dato->idmodelo=$request->idmodelo;
-        $Dato->save();
+        $target_dir=public_path().'/Imagenes/';
+        $target_file=$target_dir . basename($_FILES["file"]["name"]);
+        $uploadOk= 1;
+        $imageFileType=pathinfo($target_file,PATHINFO_EXTENSION);
+        $check=getimagesize($_FILES["file"]["tmp_name"]);
 
-        return response()->json(['mensaje'=>"Datos Guardados.", 'code'=>'201']);
+        if($check !== false){
+            $uploadOk= 1;
+            if(move_uploaded_file($_FILES["file"]["tmp_name"],$target_file)){
+
+                $Dato=new Image();
+                $Dato->ruta=basename( $_FILES["file"]["name"]);
+                $Dato->modelo=$request->modelo;
+                $Dato->idmodelo=$request->idmodelo;
+                $Dato->save();
+
+                return response()->json(['mensaje'=>"Imagen guardada.", 'code'=>'201']);
+            }else{
+
+                return response()->json(['mensaje'=>"Error al subir imagen.", 'code'=>'201']);
+                $uploadOk= 0;
+            }
+        }
+                
+
+        
     }
 
     /**
@@ -51,9 +70,10 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id ,$modelo)
     {
-        
+        $datos=Image::where('idmodelo',$id)->where('modelo',$modelo)->get()->first();  
+        return response()->json(['result'=>$datos]);
     }
 
     /**
@@ -91,7 +111,7 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy($id)
     {
         $datos=Image::find($id);
         $datos->delete();
