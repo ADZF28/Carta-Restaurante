@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Routes, Router } from "@angular/router";
 @Component({
@@ -8,34 +8,42 @@ import { Routes, Router } from "@angular/router";
 })
 export class MenuComponent implements OnInit {
 
+  retau:boolean=false;
+  produc:boolean=false; 
+  qr:boolean=false;
+  @Input('entrada') page;
   constructor( 
     private ruta: Router,
      private menu:MenuController
      ) { }
 
-  ngOnInit() {}
-  retau:boolean=true;
-  produc:boolean=false; 
-  qr:boolean=false;
+  ngOnInit() {
+    if(this.page=="1"){
+      this.retau=true;
+      this.produc=false;
+      this.qr=false;
+    }else if(this.page=="2"){
+      this.retau=false;
+      this.produc=true;
+      this.qr=false;
+    } else{
+      this.retau=false;
+      this.produc=false;
+      this.qr=true;
+    }
+  }
+ 
 
  uno(){
-   this.retau=true;
-   this.produc=false;
-   this.qr=false;
+   
    this.ruta.navigate(['/restaurante']);
  }
 
  dos(){
-  this.retau=false;
-  this.produc=true;
-  this.qr=false;
   this.ruta.navigate(['/producto']);
 }
 
 tres(){
-  this.retau=false;
-  this.produc=false;
-  this.qr=true;
   this.ruta.navigate(['/administrador']);
 }
 
