@@ -13,9 +13,7 @@ import { RestauranteService } from '../../Servicios/restaurante.service';
 export class EscaneoPage implements OnInit {
 
   datocodificado: any;
-  datoscaneado: {};
-  id:string;
-  nombre:string;
+  datoscaneado:string;
 
 
   constructor(
@@ -39,6 +37,7 @@ export class EscaneoPage implements OnInit {
     toast.present();
    
   }
+
   async error(mensaje: string) {
     const toast = await this.toast.create({
       message: "Bienvenido al restaurante "+mensaje+".",
@@ -49,11 +48,21 @@ export class EscaneoPage implements OnInit {
    
   }
 
+  async mensaje(mensaje: string) {
+    const toast = await this.toast.create({
+      message: mensaje,
+      duration: 5000,
+      color: "success",
+    });
+    toast.present();
+   
+  }
+
   LeerCode() {
     
     this.barcodeScanner.scan().then(barcodeData => {
-        this.datoscaneado = barcodeData;
-        this.ReconocerRestaurante(String(this.datoscaneado));
+        this.datoscaneado = barcodeData['text'];
+        this.ReconocerRestaurante(this.datoscaneado);
       })
       .catch(err => {
         console.log("Error", err);
@@ -74,33 +83,44 @@ export class EscaneoPage implements OnInit {
 
   ReconocerRestaurante(nombreresta: string) {
     
+    this.mensaje("entra a la funcion con el dato :"+nombreresta);
+
     if(nombreresta=="Administradores"){
+      this.mensaje("Administradorr comprobado");
       this.ruta.navigate(["/login"]);
     }else{
 
       this.resta.ObtenerIDRestaurante(nombreresta)
       .then((data) => {
-        let Restau = data["result"];
         
-        if (Restau.length > 0) {
-          for (let data of Restau) {
-           if(data['nombre'== nombreresta]){
-            this.id=data['id'];
-            this.nombre=data['nombre'];
-            break;
-           }
-            
+        
+        
+        if (data["result"].length > 0) {
+
+          let nombre,id;
+
+            this.mensaje("restaurante encontrado");
+            id=data['result'].id;
+            nombre=data['result'].nombre;
+           
+           
+          
+          if(id==""||id==null||nombre==""||nombre==null){
+            this.mensaje("vacios");
+
+          }else{
+          this.ruta.navigate(["/home/"+id+"/"+nombre]);
+          this.ingreso(nombre);
           }
-          this.ruta.navigate(["/home/"+this.id+"/"+this.nombre]);
-          this.ingreso( String(this.datoscaneado));
         } else {
-        
           this.error("Codigo QR incorrecto.");
           
         }
       })
       .catch((error) => {
         debugger
+        this.mensaje("error");
+
         console.log(error);
       });
 
