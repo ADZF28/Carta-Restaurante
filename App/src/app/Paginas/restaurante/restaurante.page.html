@@ -85,6 +85,47 @@
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
           <center>      
             <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+            Modificar Restaurante
+            <ion-icon (click)="compri6()" style="font-size: 20px; padding-left: 150px;" [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+  
+          </ion-label>
+        </center>
+
+         <div style="margin: 10px; margin-bottom: 15px;"> 
+
+          <ion-list *ngIf="resmodi">   
+            <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
+              <ion-label>Restaurante</ion-label>
+              <ion-select  [(ngModel)]="selectmodires"  (ionChange)="retroali()">
+                <ion-select-option  *ngFor="let item of Arestau" value="{{item.id}}" >{{item.nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+
+          <ion-item *ngIf="resmodi" >
+            <ion-label position="floating">Anterior</ion-label>
+            <ion-input  readonly="readonly"  [(ngModel)]="resanterior" ></ion-input>
+            <ion-icon style="padding-top: 25px;" name="return-down-back-outline" slot="start" ></ion-icon>
+          </ion-item>
+
+          <ion-item *ngIf="resmodi" >
+            <ion-label position="floating">Nuevo</ion-label>
+            <ion-input    [(ngModel)]="resnuevo" ></ion-input>
+            <ion-icon style="padding-top: 25px;" name="repeat-outline" slot="start" ></ion-icon>
+          </ion-item>
+
+         
+        </div>
+
+          <ion-button  *ngIf="resmodi" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="modificarrestau()">Modificar </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card style="padding-top: 1px;" >
+        
+        <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
+          <center>      
+            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
             Agregar una Sucursal
             <ion-icon (click)="compri4()" style="font-size: 20px; padding-left: 150px;" [name]="addsucu===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
   
@@ -149,7 +190,6 @@
           <ion-button  *ngIf="addsucu" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregarsucur()">Guardar</ion-button>
         </ion-card-content>
       </ion-card>
-
  
       <ion-card>   
 
@@ -166,6 +206,7 @@
         <ion-searchbar *ngIf="mostra" placeholder="Buscar" showCancelButton="focus"  [(ngModel)]="texto" name="busca" ></ion-searchbar>
        
          <div style="padding-top: 10px !important;"  *ngIf="mostra">
+
            <table style="width:95%; margin: 10px;">
              <tr>
                <th>Restaurante</th>
@@ -230,7 +271,7 @@
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
           <center>      
             <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
-            Modificar Sucursal
+            Modificar Sucursales
             <ion-icon (click)="compri3()" style="font-size: 20px; padding-left: 150px;" [name]="actu===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
   
           </ion-label>

@@ -74,14 +74,22 @@ export class EscaneoPage implements OnInit {
 
   ReconocerRestaurante(nombreresta: string) {
     
-    this.resta.ObtenerIDRestaurante(nombreresta)
+    if(nombreresta=="Administradores"){
+      this.ruta.navigate(["/login"]);
+    }else{
+
+      this.resta.ObtenerIDRestaurante(nombreresta)
       .then((data) => {
         let Restau = data["result"];
         
         if (Restau.length > 0) {
           for (let data of Restau) {
+           if(data['nombre'== nombreresta]){
             this.id=data['id'];
             this.nombre=data['nombre'];
+            break;
+           }
+            
           }
           this.ruta.navigate(["/home/"+this.id+"/"+this.nombre]);
           this.ingreso( String(this.datoscaneado));
@@ -95,6 +103,9 @@ export class EscaneoPage implements OnInit {
         debugger
         console.log(error);
       });
+
+    }
+    
     
   }
  

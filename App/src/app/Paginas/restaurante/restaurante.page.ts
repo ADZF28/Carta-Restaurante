@@ -14,8 +14,12 @@ import { ImagenService } from '../../Servicios/imagen.service';
   templateUrl: "./restaurante.page.html",
   styleUrls: ["./restaurante.page.scss"],
 })
-export class RestaurantePage implements OnInit{
+export class RestaurantePage {
   nombre: string;
+  
+  resanterior:string;
+  resnuevo:string;
+
   
   imagenm: string;
   direccionm: string;
@@ -38,12 +42,14 @@ export class RestaurantePage implements OnInit{
   actu: boolean = false;
   addsucu: boolean = false;
   mosinfo:  boolean = false;
+  resmodi: boolean= false;
   aprobado: boolean = false;
 
   SelectRes: string;
   SelectValue: string;
   Selectsucu: string;
   SelectorSucursal:string;
+  selectmodires:string;
 
   Arestau: any = [];
   Sucu: any = [];
@@ -149,6 +155,9 @@ export class RestaurantePage implements OnInit{
   }
   compri5() {
     this.mosinfo = !this.mosinfo;
+  }
+  compri6() {
+    this.resmodi = !this.resmodi;
   }
   agregar() {
     if (
@@ -284,8 +293,57 @@ export class RestaurantePage implements OnInit{
       });
 
   }
+  modificarrestau(){
+    if(this.resnuevo==""||
+    this.resnuevo==null||
+    this.resanterior==""||
+    this.resanterior==null||
+    this.selectmodires==""||
+    this.selectmodires==null
+    ){
+      this.mensa("Se deben llenar todos los campos.", "warning");
+    } else {
+      
+      let datosIR = {
+        nombre: this.resnuevo,
+        
+      };
+      this.restaura
+        .ModificarRestaurante(datosIR, this.selectmodires)
+        .then((data) => {
+          
+          this.Arestau= [];
+          this.Sucu = [];
+          this.MosSucu = [];
+          this.selectmodires="";
+          this.SelectRes="";
+          this.SelectValue="";
+          this.Selectsucu="";
+          this.SelectorSucursal="";
+          this.resanterior="";
+          this.resnuevo="";
 
-  modificar() {
+          this.traerRestau();
+
+
+          this.mensa("El restaurante se Actualizado.", "secondary");
+        })
+        .catch((error) => {
+          //  debugger;
+        });
+
+
+    }
+  }
+  retroali(){
+    for(let item of this.Arestau){
+      if(item['id']== this.selectmodires){
+        this.resanterior=item['nombre'];
+      }
+    }
+  }
+
+ modificar() {
 
     if (
 
@@ -308,7 +366,7 @@ export class RestaurantePage implements OnInit{
     ) {
       this.mensa("Se deben llenar todos los campos.", "warning");
     } else {
-      debugger
+      
       let datosIR = {
         idrestaurante: this.SelectRes,
         contacto: this.contactom,
@@ -322,7 +380,7 @@ export class RestaurantePage implements OnInit{
         .ModificarInfoRestaurante(datosIR, this.Selectsucu)
         .then((data) => {
 
-          debugger
+          
           this.SelectRes = "";
           this.Selectsucu = "";
           this.contactom = "";
@@ -342,6 +400,8 @@ export class RestaurantePage implements OnInit{
 
     }
   }
+
+  
   async mensa(mensaje: string, colo: string) {
     const toast = await this.toast.create({
       message: mensaje,
@@ -439,7 +499,9 @@ export class RestaurantePage implements OnInit{
       mimeType: 'image/jpeg',
       headers: {}
     }
-    fileTransfer.upload(this.myphoto, encodeURI('https://pacific-brook-35350.herokuapp.com/api/v01/users/imagen/' ), options)
+    let modelo="InfoRestaurante";
+    let id="1";
+    fileTransfer.upload(this.myphoto, encodeURI('https://pacific-brook-35350.herokuapp.com/api/Imagen/'+id+"/"+modelo ), options)
       .then((data) => {
         this.UrlImagen = "https://pacific-brook-35350.herokuapp.com/Imagenes/" + this.imagenBD;
         this.mensa("Imagen actualizada", "secondary");

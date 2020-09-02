@@ -111,6 +111,17 @@ export class RestauranteService {
       });
     });
   }
+  ModificarRestaurante(data:any,id:string) {
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/Restaurante/'+id;
+    return new Promise ((resolve, reject) => {
+      this.http.put(url, data).subscribe(res => {
+        resolve(res);
+      }, error => {
+        debugger
+        reject(error);
+      });
+    });
+  }
  
 
 }

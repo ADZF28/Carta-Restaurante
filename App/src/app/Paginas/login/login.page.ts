@@ -59,7 +59,7 @@ export class LoginPage implements OnInit {
       this.vacios("Todos los campos deben de completarse.");
     } else {
         if(this.pas =="admin"&&  this.user=="admin"){
-          this.ruta.navigate(["/administrador"]);
+          this.ruta.navigate(["/restaurante"]);
 
         }else
         this.vacios("Datos incorrectos.");
