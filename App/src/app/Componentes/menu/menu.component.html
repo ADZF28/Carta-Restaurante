@@ -1,4 +1,18 @@
-
-<ion-content>
-
-</ion-content>
+ <ion-app>
+      <ion-tabs>
+        <ion-tab-bar slot="bottom">
+          <ion-tab-button (click)="uno()" [style.color]="retau===true ? '#3980ff' : '' "  >
+            <ion-label>Restaurante</ion-label>
+            <ion-icon name="restaurant-outline"></ion-icon>
+          </ion-tab-button>
+          <ion-tab-button (click)="dos()"[style.color]="produc===true ? '#3980ff' : '' "  >
+            <ion-label>Productos</ion-label>
+            <ion-icon  name="fast-food-outline"></ion-icon>
+          </ion-tab-button>
+          <ion-tab-button (click)="tres()"  [style.color]="qr===true ? '#3980ff' : '' ">
+            <ion-label>Código QR</ion-label>
+            <ion-icon  name="qr-code-outline"></ion-icon>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+ </ion-app>

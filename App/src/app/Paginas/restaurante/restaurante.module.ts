@@ -16,7 +16,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     FormsModule,
     IonicModule,
     RestaurantePageRoutingModule,
-    PipesModule
+    PipesModule,
 
   ],
   declarations: [RestaurantePage,MenuComponent]

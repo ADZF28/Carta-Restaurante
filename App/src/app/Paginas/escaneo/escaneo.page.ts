@@ -99,8 +99,8 @@ export class EscaneoPage implements OnInit {
      
           id=data['result'].id;
           nombre=data['result'].nombre;
-        
-        this.mensaje( ""+nombre);
+          
+        this.mensaje( "Bienvenido al restaurante: "+nombre);
       if(id==""||id==null||nombre==""||nombre==null){
         this.mensaje("vacios");
 

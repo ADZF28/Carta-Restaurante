@@ -8,6 +8,7 @@ import { ProductoPageRoutingModule } from './producto-routing.module';
 
 import { ProductoPage } from './producto.page';
 import { PipesModule } from '../../pipes/pipes.module';
+import { MenuComponent } from '../../Componentes/menu/menu.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { PipesModule } from '../../pipes/pipes.module';
     ProductoPageRoutingModule,
     PipesModule
   ],
-  declarations: [ProductoPage]
+  declarations: [ProductoPage, MenuComponent]
 })
 export class ProductoPageModule {}
