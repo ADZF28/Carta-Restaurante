@@ -42,44 +42,44 @@ export class AdministradorPage implements OnInit {
  }
  
 
-  checkPermissions() {
+ checkPermissions() {
+  this.androidPermissions
+  .checkPermission(this.androidPermissions
+  .PERMISSION.WRITE_EXTERNAL_STORAGE)
+  .then((result) => {
+   console.log('Has permission?',result.hasPermission);
+   this.hasWriteAccess = result.hasPermission;
+ },(err) => {
+     this.androidPermissions
+       .requestPermission(this.androidPermissions
+       .PERMISSION.WRITE_EXTERNAL_STORAGE);
+  });
+  if (!this.hasWriteAccess) {
     this.androidPermissions
-    .checkPermission(this.androidPermissions
-    .PERMISSION.WRITE_EXTERNAL_STORAGE)
-    .then((result) => {
-     console.log('Has permission?',result.hasPermission);
-     this.hasWriteAccess = result.hasPermission;
-   },(err) => {
-       this.androidPermissions
-         .requestPermission(this.androidPermissions
-         .PERMISSION.WRITE_EXTERNAL_STORAGE);
-    });
-    if (!this.hasWriteAccess) {
-      this.androidPermissions
-        .requestPermissions([this.androidPermissions
-        .PERMISSION.WRITE_EXTERNAL_STORAGE]);
-    }
- }
-   downloadR() {
-     if (!this.hasWriteAccess) {
-       this.checkPermissions();
-     }
-     const canvas = document.querySelector('canvas') as HTMLCanvasElement;
-     const imageData = canvas.toDataURL('image/jpeg').toString();
-     console.log('data: ', imageData);
- 
-     let data = imageData.split(',')[1];
- 
-     this.base64ToGallery.base64ToGallery(data, { prefix: '_img', mediaScanner:true }).then(
-         async (res) => {
-           let toast = await this.toastCtrl.create({
-             header: 'QR code saved to Photolibrary',
-           });
-           toast.present();
-         },
-         err => console.log('err: ', err)
-       );
-   }
+      .requestPermissions([this.androidPermissions
+      .PERMISSION.WRITE_EXTERNAL_STORAGE]);
+  }
+}
+ downloadR() {
+  if (!this.hasWriteAccess) {
+    this.checkPermissions();
+  }
+  const canvas = document.querySelector('canvas') as HTMLCanvasElement;
+  const imageData = canvas.toDataURL('image/jpeg').toString();
+  console.log('data: ', imageData);
+
+  let data = imageData.split(',')[1];
+
+  this.base64ToGallery.base64ToGallery(data, { prefix: '_img', mediaScanner:true }).then(
+      async (res) => {
+        let toast = await this.toastCtrl.create({
+          header: 'QR code saved to Photolibrary',
+        });
+        toast.present();
+      },
+      err => console.log('err: ', err)
+    );
+}
   openFirst2() {
  
     this.menu.enable(true, 'first');
