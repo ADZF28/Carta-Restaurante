@@ -122,7 +122,7 @@ export class ProductoPage implements OnInit {
   }
 
 Cambiocat(){
-  
+  debugger
   for(let item of this.Restaurantes){
     if(this.UValorRestaurante==item['id']){
       this.rest=item['nombre'];

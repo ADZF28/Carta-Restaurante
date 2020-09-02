@@ -1,5 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
+	<ion-title style="text-align: center;">Administrador</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="salir2()">
         <ion-icon name="exit-outline"></ion-icon>
@@ -9,8 +10,6 @@
 </ion-header>
 
 <ion-content>
-  <app-menu entrada="3"></app-menu>
-
   
  <ion-card>
 	<ion-segment [(ngModel)]="elementType">
@@ -53,3 +52,8 @@
 </ion-card>
 
 </ion-content>
+<ion-footer class="ion-no-border">
+	<ion-toolbar>  
+		<app-menu entrada="3"></app-menu>
+	</ion-toolbar>
+  </ion-footer>
