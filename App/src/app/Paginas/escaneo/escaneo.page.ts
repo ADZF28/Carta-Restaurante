@@ -52,7 +52,7 @@ export class EscaneoPage implements OnInit {
     const toast = await this.toast.create({
       message: mensaje,
       duration: 5000,
-      color: "success",
+      color: "secondary",
     });
     toast.present();
    
@@ -69,22 +69,10 @@ export class EscaneoPage implements OnInit {
       });
   }
  
-  CodificarTexto() {
-    
-    this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.datocodificado).then(
-        encodedData => {
-          this.datocodificado = encodedData;
-        },
-        err => {
-          console.log("Un error ha ocurrido: " + err);
-        }
-      );
-  }
 
   ReconocerRestaurante(nombreresta: string) {
     
     if(nombreresta=="Administradores"){
-      this.mensaje("Administradorr comprobado");
       this.ruta.navigate(["/login"]);
     }else{
 
@@ -92,7 +80,7 @@ export class EscaneoPage implements OnInit {
   .then((data) => {
   
     if (data['code'] == "200" ) {
-      this.error("Codigo QR incorrecto.");
+      this.error("Código QR no válido.");
     } else {
      
       let nombre,id;
@@ -100,13 +88,12 @@ export class EscaneoPage implements OnInit {
           id=data['result'].id;
           nombre=data['result'].nombre;
           
-        this.mensaje( "Bienvenido al restaurante: "+nombre);
+        this.mensaje( "Bienvenido al restaurante "+nombre);
       if(id==""||id==null||nombre==""||nombre==null){
         this.mensaje("vacios");
 
       }else{
       this.ruta.navigate(["/home/"+id+"/"+nombre]);
-      this.mensaje("/home/"+id+"/"+nombre);
       }
       
     }
