@@ -30,7 +30,7 @@ export class EscaneoPage implements OnInit {
 
   async ingreso(mensaje: string) {
     const toast = await this.toast.create({
-      message: "Bienvenido al restaurante "+mensaje+".",
+      message: "Bienvenido al restaurante"+mensaje+".",
       duration: 3000,
       color: "success",
     });
@@ -40,7 +40,7 @@ export class EscaneoPage implements OnInit {
 
   async error(mensaje: string) {
     const toast = await this.toast.create({
-      message: "Bienvenido al restaurante "+mensaje+".",
+      message: mensaje,
       duration: 3000,
       color: "danger",
     });
@@ -83,51 +83,45 @@ export class EscaneoPage implements OnInit {
 
   ReconocerRestaurante(nombreresta: string) {
     
-    this.mensaje("entra a la funcion con el dato :"+nombreresta);
-
     if(nombreresta=="Administradores"){
       this.mensaje("Administradorr comprobado");
       this.ruta.navigate(["/login"]);
     }else{
 
       this.resta.ObtenerIDRestaurante(nombreresta)
-      .then((data) => {
+  .then((data) => {
+  
+    if (data['code'] == "200" ) {
+      this.error("Codigo QR incorrecto.");
+    } else {
+     
+      let nombre,id;
+     
+          id=data['result'].id;
+          nombre=data['result'].nombre;
         
-        
-        
-        if (data["result"].length > 0) {
+        this.mensaje( ""+nombre);
+      if(id==""||id==null||nombre==""||nombre==null){
+        this.mensaje("vacios");
 
-          let nombre,id;
+      }else{
+      this.ruta.navigate(["/home/"+id+"/"+nombre]);
+      this.mensaje("/home/"+id+"/"+nombre);
+      }
+      
+    }
+  })
+  .catch((error) => {
+    debugger
+    this.mensaje("error");
 
-            this.mensaje("restaurante encontrado");
-            id=data['result'].id;
-            nombre=data['result'].nombre;
-           
-           
-          
-          if(id==""||id==null||nombre==""||nombre==null){
-            this.mensaje("vacios");
-
-          }else{
-          this.ruta.navigate(["/home/"+id+"/"+nombre]);
-          this.ingreso(nombre);
-          }
-        } else {
-          this.error("Codigo QR incorrecto.");
-          
-        }
-      })
-      .catch((error) => {
-        debugger
-        this.mensaje("error");
-
-        console.log(error);
-      });
+    console.log(error);
+  });
 
     }
     
     
   }
- 
+    
 
 }
