@@ -8,13 +8,15 @@ import { AdministradorPageRoutingModule } from './administrador-routing.module';
 
 import { AdministradorPage } from './administrador.page';
 import { MenuComponent } from '../../Componentes/menu/menu.component';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdministradorPageRoutingModule
+    AdministradorPageRoutingModule,
+    NgxQRCodeModule
   ],
   declarations: [AdministradorPage, MenuComponent]
 })
