@@ -5,6 +5,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { ToastController } from '@ionic/angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { RestauranteService } from '../../Servicios/restaurante.service';
 
 
 @Component({
@@ -18,7 +19,9 @@ export class AdministradorPage implements OnInit {
 	scannedCode = null;
   elementType:  'canvas' = 'canvas';
   hasWriteAccess: boolean = false;
-
+  Arestau:any=[];
+  combo:boolean=true;
+  input:boolean=false;
 
   constructor(    
     private ruta: Router,
@@ -26,10 +29,20 @@ export class AdministradorPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
 		private base64ToGallery: Base64ToGallery,
     private toastCtrl: ToastController,
-    private androidPermissions:AndroidPermissions
+    private androidPermissions:AndroidPermissions,
+    private restaura:RestauranteService
     ) {}
 
   ngOnInit() {
+    this.traerRestau();
+  }
+  escri(){
+    this.combo=false;
+    this.input=true;
+  }
+  resta(){
+    this.combo=true;
+    this.input=false;
   }
   scanCode() {
 		this.barcodeScanner.scan().then((barcodeData) => {
@@ -40,7 +53,25 @@ export class AdministradorPage implements OnInit {
   ionViewWillEnter() {
     this.checkPermissions();
  }
- 
+ traerRestau() {
+  this.restaura
+    .TodosRestaurante()
+    .then((data) => {
+      this.Arestau = data["result"];
+
+      if (this.Arestau.length > 0) {
+        //this.idr = this.Arestau[this.Arestau.length - 1].id + 1;
+
+      } else {
+
+      }
+
+    })
+    .catch((error) => {
+      debugger;
+      console.log(error);
+    });
+}
 
  checkPermissions() {
   this.androidPermissions

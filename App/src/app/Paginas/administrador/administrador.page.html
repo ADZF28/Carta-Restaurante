@@ -19,13 +19,31 @@
 		</ion-segment-button>
 		
 	</ion-segment>
+	<ion-list >
+		<ion-segment  scrollable value="call">
+			<ion-segment-button value="call" layout="icon-start" (click)="resta()">
+			  <ion-label>Restaurantes</ion-label>
+			  <ion-icon name="restaurant-outline"></ion-icon>
+			</ion-segment-button>
+			<ion-segment-button value="favorite" layout="icon-start" (click)="escri()">
+			  <ion-label>Escribir</ion-label>
+			  <ion-icon name="create-outline"></ion-icon>
+			</ion-segment-button>
+			
+		  </ion-segment>
 
-	<ion-item>
+		<ion-item style="border:0.5px solid rgb(192, 192, 192);" *ngIf="combo">
+		  <ion-label>Restaurante</ion-label>
+		  <ion-select  [(ngModel)]="qrData" >
+			<ion-select-option  *ngFor="let item of Arestau" value="{{item.nombre}}" >{{item.nombre}}</ion-select-option>
+		  </ion-select>
+		</ion-item>
+		<ion-item  *ngIf="input" >
 		<ion-input type="text" placeholder="Texto a Convertir" [(ngModel)]="qrData">
 		</ion-input>
 	</ion-item>
+	  </ion-list>
 
-	
 
 	<ion-card *ngIf="qrData" class="text-center">
     <center><ngx-qrcode [elementType]="elementType" [value]="qrData" qrc-class="my-code"></ngx-qrcode></center>
