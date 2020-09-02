@@ -23,6 +23,7 @@ export class HomePage implements OnInit{
   productosCate:any=[];
   IdRestaurante:string="1";
   TodosProductos:boolean=true;
+  filtur:boolean=true;
   //FiltroProductos:boolean=false;
   SelectValue:string;
   texto:string; 
@@ -71,6 +72,8 @@ export class HomePage implements OnInit{
   }
 
   Ir(){
+    this.filtur=true;
+    this.buscar=false;
      this.menu.close();
    // this.menu.open('end');
     this.TodosProductos=true;
@@ -136,15 +139,20 @@ export class HomePage implements OnInit{
     }
   }
 
-  Cambiocat2(){
+
+
+  catefiltro(id :string){
     this.menu.close();
     this.TodosProductos=false;
-    //this.FiltroProductos=true;
+    this.buscar=false;
+    this.filtur=false;
+    this.buscar=true;
+    this.mostrarc=false;
     this.productosCate=[];
     if (this.productos.length > 0) {
       let i=0;
       for (let data of this.productos) {
-        if(data['idcategoria']==this.Valorcategoria){
+        if(data['idcategoria']==id){
           this.productosCate[i]=data;
           i++;
         }
@@ -157,6 +165,7 @@ export class HomePage implements OnInit{
       this.Vacio("No hay productos en esta categoria. ");
     }
   }
+
 
   MostrarProductos() {
     
