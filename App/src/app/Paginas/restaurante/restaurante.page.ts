@@ -44,6 +44,7 @@ export class RestaurantePage {
   mosinfo:  boolean = false;
   resmodi: boolean= false;
   aprobado: boolean = false;
+  
 
   SelectRes: string;
   SelectValue: string;
@@ -56,8 +57,9 @@ export class RestaurantePage {
   MosSucu: any = [];
 
   imageURI: any;
+  imageFileName: any;
   UrlImagen: any;
-  imagenBD: any;
+  imagenBD: any ;
   msgdata: any;
   myphoto: any;
   
@@ -236,11 +238,7 @@ export class RestaurantePage {
         horario: this.horarios,
         sucursal: this.sucursals,
       };
-      let datosImagen= {
-        ruta: this.UrlImagen,
-        modelo: "InfoRestaurane",
-        idmodelo: this.direccions
-      };
+      
       this.restaura
         .AgregarInfoRestaurante(datosIR)
         .then((data) => {
@@ -460,6 +458,7 @@ export class RestaurantePage {
     };
     this.camera.getPicture(options).then((imageData) => {
       this.myphoto = imageData;
+      this.imagenBD="ok";
     }, (err) => {
       // Handle error
     });
@@ -476,6 +475,8 @@ export class RestaurantePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       this.myphoto = imageData;
+      this.imagenBD="ok";
+
       }, (err) => {
       // Handle error
     });

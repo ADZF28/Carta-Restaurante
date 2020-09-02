@@ -146,11 +146,13 @@
             <ion-icon style="padding-top: 25px;" name="sunny-outline" slot="start" ></ion-icon>
           </ion-item>
  
-          <ion-item *ngIf="addsucu">
-            <ion-label position="floating">Imagen</ion-label>
-            <ion-input type='file'  readonly="readonly"  [(ngModel)]="imagenBD" (click)="ActionsPhoto()" ></ion-input>
-            <ion-icon style="padding-top: 25px;" name="images" slot="start" ></ion-icon>
-        </ion-item>
+          <div *ngIf="addsucu">
+            <ion-button  style="font-weight: bolder;" color ="light"  expand="block" style="margin: 10px;" (click)="ActionsPhoto()" type='file'>
+              <ion-icon  name="images" slot="start" > </ion-icon>  Cargar Imagen
+              <ion-icon   name="checkmark-outline" slot="end" *ngIf="imagenBD"> </ion-icon>  
+          </ion-button>
+          </div>
+
         </div>
 
           <ion-button  *ngIf="addsucu" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregarsucur()">Guardar</ion-button>
