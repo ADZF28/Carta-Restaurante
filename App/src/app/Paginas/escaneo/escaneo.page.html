@@ -1,24 +1,15 @@
   
   <ion-content class="myview" >
-    <ion-title style="text-align: center; margin-top: 60px; font-family: serif; font-weight: bolder; font-size: 30px;"  color="light">
-      Carta de restaurante
-    </ion-title>
+    
     <div style="padding: 10px">
   
-        <!--CODIFICAR-->
-        <div align="center">
-                  <img src="../../assets/img/qr.png" height="170px" width="170px">
+        <div align="center" style="padding-top: 140px; padding-bottom: 25px;">
+                  <img  style="opacity: 0.6;" src="../../assets/img/qr2.gif" height="170px" width="170px">
         </div>
                
 
-        <ion-input type="text" color="primary" placeholder="Digite su texto" [(ngModel)]="datocodificado"></ion-input>
-    
-        <ion-button expand="block" (click)="CodificarTexto()">Generar Código</ion-button>
   
-        <br>
-  
-        <!--SCANNEAR-->
-        <ion-button size="large" style="font-weight: bolder;" expand="block" color="warning" (click)="LeerCode()">Scannear Código</ion-button>
+        <ion-button size="large" style="opacity:0.6; font-weight: bolder;" expand="block" color="warning" (click)="LeerCode()">Escanear Código QR</ion-button>
       
     </div>
       
