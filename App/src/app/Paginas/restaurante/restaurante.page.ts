@@ -56,6 +56,7 @@ export class RestaurantePage {
   Sucu: any = [];
   MosSucu: any = [];
 
+  base64Image:string;
   imageURI: any;
   imageFileName: any;
   UrlImagen: any;
@@ -408,6 +409,14 @@ export class RestaurantePage {
     });
     toast.present();
   }
+  async prueba(mensaje: string, colo: string) {
+    const toast = await this.toast.create({
+      message: mensaje,
+      duration: 9000,
+      color: colo,
+    });
+    toast.present();
+  }
 
   async ActionsPhoto() {
     const actionSheet = await this.action.create({
@@ -458,6 +467,7 @@ export class RestaurantePage {
     };
     this.camera.getPicture(options).then((imageData) => {
       this.myphoto = imageData;
+      this.prueba(imageData,"warning")
       this.imagenBD="ok";
     }, (err) => {
       // Handle error
@@ -475,7 +485,8 @@ export class RestaurantePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       this.myphoto = imageData;
-      this.imagenBD="ok";
+      this.imagenBD="ok";      
+      this.prueba(imageData,"warning")
 
       }, (err) => {
       // Handle error
@@ -502,7 +513,7 @@ export class RestaurantePage {
     }
     let modelo="InfoRestaurante";
     let id="1";
-    fileTransfer.upload(this.myphoto, encodeURI('https://pacific-brook-35350.herokuapp.com/api/Imagen/'+id+"/"+modelo ), options)
+    fileTransfer.upload(this.myphoto, encodeURI('https://pacific-brook-35350.herokuapp.com/api/imagenes/'+id+"/"+modelo ), options)
       .then((data) => {
         this.UrlImagen = "https://pacific-brook-35350.herokuapp.com/Imagenes/" + this.imagenBD;
         this.mensa("Imagen actualizada", "secondary");
