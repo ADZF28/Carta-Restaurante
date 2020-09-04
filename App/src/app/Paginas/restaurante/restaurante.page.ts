@@ -20,7 +20,8 @@ export class RestaurantePage {
   resanterior:string;
   resnuevo:string;
 
-  
+  texto:string;
+  texto2:string;
   imagenm: string;
   direccionm: string;
   descripcionm: string;

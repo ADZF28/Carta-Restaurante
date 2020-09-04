@@ -21,6 +21,7 @@ export class ProductoPage implements OnInit {
   productos:any=[];
   productosCate:any=[];
   Restaurantes:any=[];
+  idres:any=[];
   texto:string;
   mostra:boolean=false;
   actu:boolean=false;
@@ -61,11 +62,24 @@ export class ProductoPage implements OnInit {
     this.PostAddProducto.AllProductosObtener()
       .then((data) => {
         this.productos = data['result'];
+       // this.consultarRestaurante(this.productos);
       })
       .catch((error) => {
         console.log(error);
       });
     
+  }
+
+  consultarRestaurante(id:string){
+    this.restaurante.IdProductoResta(id)
+    .then((data) => {
+      this.idres = data["result"];
+  
+    })
+    .catch((error) => {
+      debugger
+      console.log(error);
+    });
   }
   
   openFirst2() {

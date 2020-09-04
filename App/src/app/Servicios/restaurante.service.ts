@@ -122,6 +122,18 @@ export class RestauranteService {
       });
     });
   }
+
+  IdProductoResta(id:string) {
+    let  url = 'https://pacific-brook-35350.herokuapp.com/api/idres/'+id;
+    return new Promise ((resolve, reject) => {
+      this.http.get(url).subscribe(res => {
+        resolve(res);
+      }, error => {
+        debugger
+        reject(error);
+      });
+    });
+  }
  
 
 }
