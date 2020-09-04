@@ -19,13 +19,13 @@
       <ion-card style="padding-top: 1px;" >
 
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+          
+        <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+          <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
             Agregar Producto
-            <ion-icon (click)="compri()" style="font-size: 20px; padding-left: 150px;" [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
           </ion-label>
-        </center>
+        <ion-icon   (click)="compri()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+        </ion-item> 
 
 
 
@@ -56,12 +56,18 @@
             <ion-icon style="padding-top: 25px;" name="logo-twitch" slot="start" ></ion-icon>
           </ion-item>
 
+          <div *ngIf="agrega" style="padding-top: 13px;">
+          <ion-label  >Elegir turno</ion-label>
+          </div>
           <ion-segment *ngIf="agrega" [(ngModel)]="ValorTurno" (ionChange)="Cambiocat()" >
             <ion-segment-button  *ngFor="let tur of turn" value="{{tur.id}}">
               <ion-label>{{tur.turno}}</ion-label>
             </ion-segment-button>
           </ion-segment>
 
+          <div *ngIf="agrega" style="padding-top: 13px;">
+            <ion-label  >Elegir categoría</ion-label>
+            </div>
           <ion-segment *ngIf="agrega" [(ngModel)]="ValorCate" (ionChange)="Cambiocat()" >
             <ion-segment-button  *ngFor="let cat of cate" value="{{cat.id}}">
               <ion-label>{{cat.categoria}}</ion-label>
@@ -75,17 +81,17 @@
       </ion-card>
 
        <!-- Mostrarr y Eliminar Producto -->
-      <ion-card>
+      <ion-card > 
   
         <ion-card-content>
 
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+        <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+          <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
             Mostrar Productos
-            <ion-icon (click)="compri2()" style="font-size: 20px; padding-left: 150px;" [name]="mostra===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
           </ion-label>
-        </center>
+        <ion-icon   (click)="compri2()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+        </ion-item> 
+
         <ion-searchbar *ngIf="mostra" placeholder="Buscar" showCancelButton="focus"  [(ngModel)]="texto" name="busca" ></ion-searchbar>
          <div style="padding-top: 10px !important;"  *ngIf="mostra">
            <table style="width:95%; margin: 10px;">
@@ -114,15 +120,14 @@
       <ion-card style="padding-top: 1px;" >
 
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
-              Modificar Producto
-            <ion-icon (click)="compri3()" style="font-size: 20px; padding-left: 150px;" [name]="actu===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
+         
+
+        <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+          <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
+            Modificar Producto
           </ion-label>
-        </center>
-
-
+        <ion-icon  (click)="compri3()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+        </ion-item> 
 
          <div style="margin: 10px; margin-bottom: 15px;"> 
 

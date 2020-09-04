@@ -18,19 +18,18 @@
       
       
       
-      
+    
       
       <ion-card style="padding-top: 1px;" >
         
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
-            Agregar Restaurante
-            <ion-icon (click)="compri()" style="font-size: 20px; padding-left: 150px;" [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
-          </ion-label>
-        </center>
-
+          
+      <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+        <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
+          Agregar Restaurante  
+        </ion-label>
+      <ion-icon (click)="compri()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+      </ion-item>  
          <div style="margin: 10px; margin-bottom: 15px;"> 
 
           <ion-item *ngIf="agrega" >
@@ -45,17 +44,17 @@
           <ion-button  *ngIf="agrega" style="font-weight: bolder;" color ="secondary"  expand="block" style="margin: 10px;" (click)="agregar()">Guardar </ion-button>
         </ion-card-content>
       </ion-card>
-
+      
       <ion-card style="padding-top: 1px;" >
         
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
-            Modificar Restaurante
-            <ion-icon (click)="compri6()" style="font-size: 20px; padding-left: 150px;" [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
-          </ion-label>
-        </center>
+
+          <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+            <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
+              Modificar Restaurante 
+            </ion-label>
+          <ion-icon (click)="compri6()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+          </ion-item>  
 
          <div style="margin: 10px; margin-bottom: 15px;"> 
 
@@ -90,13 +89,13 @@
       <ion-card style="padding-top: 1px;" >
         
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
-            Agregar una Sucursal
-            <ion-icon (click)="compri4()" style="font-size: 20px; padding-left: 150px;" [name]="addsucu===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
-          </ion-label>
-        </center>
+            
+      <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+        <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
+          Agregar una Sucursal 
+        </ion-label>
+      <ion-icon  (click)="compri4()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+      </ion-item> 
 
         <ion-list *ngIf="addsucu">   
           <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
@@ -159,17 +158,17 @@
         </ion-card-content>
       </ion-card>
  
-      <ion-card>   
+      <ion-card style="padding-top: 1px;">   
 
         <ion-card-content>
 
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+
+        <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+          <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
             Mostrar Restaurantes
-            <ion-icon (click)="compri2()" style="font-size: 20px; padding-left: 150px;" [name]="mostra===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
           </ion-label>
-        </center>
+        <ion-icon  (click)="compri2()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+        </ion-item> 
 
         <ion-searchbar *ngIf="mostra" placeholder="Buscar" showCancelButton="focus"  [(ngModel)]="texto" name="busca" ></ion-searchbar>
        
@@ -191,17 +190,16 @@
 
       </ion-card>
 
-      <ion-card>   
+      <ion-card style="padding-top: 1px;">   
 
         <ion-card-content>
 
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+        <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+          <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
             Mostrar las Sucursales
-            <ion-icon (click)="compri5()" style="font-size: 20px; padding-left: 150px;" [name]="mostra===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
           </ion-label>
-        </center>
+        <ion-icon   (click)="compri5()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+        </ion-item> 
 
         <ion-list *ngIf="mosinfo">   
           <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
@@ -237,13 +235,14 @@
       <ion-card style="padding-top: 1px;" >
         
         <ion-card-content style="padding-top: 0px;" style="padding-bottom: 0px;">
-          <center>      
-            <ion-label style="font-weight: bolder; font-size: 15px; text-align: center;">
+
+        
+        <ion-item style="--border-color: #ffffff !important; --min-height:min;"> 
+          <ion-label style="font-weight: bolder; font-size: 15px; margin-top:0px">
             Modificar Sucursales
-            <ion-icon (click)="compri3()" style="font-size: 20px; padding-left: 150px;" [name]="actu===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
-  
           </ion-label>
-        </center>
+        <ion-icon  (click)="compri3()" style="font-size: 20px; " [name]="agrega===true ?'chevron-up-outline':'chevron-down-outline'" slot="end" ></ion-icon>
+        </ion-item> 
 
         <ion-list *ngIf="actu">   
           <ion-item style="border:0.5px solid rgb(192, 192, 192);" >
